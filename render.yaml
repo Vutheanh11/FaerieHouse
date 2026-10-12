@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: faeriehouse
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist/client
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+      - key: RENDER_STATIC_EXPORT
+        value: "true"
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://faeriehouse.onrender.com/
+      - key: NEXT_PUBLIC_FAERIE_API_URL
+        value: https://faerienews-backend.onrender.com
