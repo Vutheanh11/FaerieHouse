@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Faerie House - One House. Many Stories.",
   description: "Faerie - Một mảnh ghép của dự án Brothers & Sisters (Brosis) tại Đại học FPT TP.HCM, nơi những sinh viên đi trước đồng hành và kết nối cùng các tân sinh viên. Tại đây, bạn có thể gặp gỡ những thành viên của Nhà, khám phá các hoạt động và đọc những câu chuyện mới nhất của Faerie.",
   alternates: { canonical: "/" },
+  icons: { icon: "/images/faerie-icon.png", apple: "/images/faerie-icon.png" },
   robots: { index: true, follow: true },
   openGraph: {
     title: "Faerie House - One House. Many Stories.",
