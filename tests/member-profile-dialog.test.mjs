@@ -46,7 +46,8 @@ test("shows the full name, role, introduction and supplied Facebook profile", ()
 
 test("shows honest pending labels without a fake link for missing details", () => {
   const html = render({ introduction: "   " });
-  assert.equal((html.match(/Đang cập nhật/g) || []).length, 4);
+  assert.equal((html.match(/Chưa chia sẻ/g) || []).length, 3);
+  assert.match(html, /Chưa công khai/);
   assert.doesNotMatch(html, /<a\b/);
   assert.match(html, /aria-labelledby="member-profile-name"/);
   assert.match(html, /aria-label="Đóng hồ sơ thành viên"/);

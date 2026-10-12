@@ -40,7 +40,7 @@ function certificateLink(value?: string) {
 function displayBirthDate(value?: string) {
   const date = value?.trim() || "";
   const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
-  return iso ? `${iso[3]}/${iso[2]}/${iso[1]}` : date || "Đang cập nhật";
+  return iso ? `${iso[3]}/${iso[2]}/${iso[1]}` : date || "Chưa công khai";
 }
 
 export default function MemberProfileDialog({
@@ -157,7 +157,7 @@ export default function MemberProfileDialog({
           <section className="member-profile-section" aria-labelledby="member-profile-intro-heading">
             <h3 id="member-profile-intro-heading">Giới thiệu</h3>
             <p className={!member.introduction?.trim() ? "member-profile-pending" : undefined}>
-              {member.introduction?.trim() || "Đang cập nhật"}
+              {member.introduction?.trim() || "Chưa chia sẻ"}
             </p>
           </section>
 
@@ -168,7 +168,7 @@ export default function MemberProfileDialog({
             </section>
             <section className="member-profile-section" aria-labelledby="member-profile-interests-heading">
               <h3 id="member-profile-interests-heading">Sở thích</h3>
-              <p className={!member.interests?.trim() ? "member-profile-pending" : undefined}>{member.interests?.trim() || "Đang cập nhật"}</p>
+              <p className={!member.interests?.trim() ? "member-profile-pending" : undefined}>{member.interests?.trim() || "Chưa chia sẻ"}</p>
             </section>
           </div>
 
@@ -190,7 +190,7 @@ export default function MemberProfileDialog({
                 <span className="sr-only"> của {fullName} (mở trong tab mới)</span>
               </a>
             ) : (
-              <p className="member-profile-pending">Đang cập nhật</p>
+              <p className="member-profile-pending">Chưa chia sẻ</p>
             )}
           </section>
         </div>

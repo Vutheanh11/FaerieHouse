@@ -1963,6 +1963,8 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
   .site-header.is-tactical .brand strong { font-size: 12px; }
   .site-header.is-tactical .brand-mark { width: 30px; height: 30px; }
   .site-header.is-tactical .main-nav button { font-size: 11px; padding: 9px 4px; }
+  .v-hero-content h1 { width: 100%; max-width: 100%; font-size: clamp(45px, 14vw, 60px); transform: translateX(-.035em) scaleX(.94); }
+  .v-hero-content h1 > span { white-space: nowrap; }
   .v-hero-bottom > p { font-size: 15px; line-height: 1.65; }
   .v-event-copy p { font-size: 15px; }
   .v-photo-main { width: 100%; }

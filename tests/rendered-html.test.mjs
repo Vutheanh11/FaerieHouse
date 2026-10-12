@@ -44,8 +44,8 @@ test("renders the Faerie website and its current navigation", async () => {
   assert.match(html, /Brosis có thể đồng hành với mình thế nào/);
   assert.doesNotMatch(html, /Chọn năm sự kiện|MISSION NOT STARTED/);
   assert.match(html, /images\/events\/2026\/team-building\/TeamBuilding_1\.webp/);
-  assert.match(html, /Kick Off — 02\/07/);
-  assert.match(html, /Kick Off — 25\/08/);
+  assert.match(html, /Khởi động đội ngũ Faerie/);
+  assert.match(html, /Kick Off Faerie 2026/);
   assert.match(html, /Faerie là một mảnh ghép/);
   assert.match(html, /property="og:image"/);
   assert.match(html, /Made by Vu The Anh ↗<\/a>/);

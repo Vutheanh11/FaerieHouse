@@ -6,7 +6,7 @@ import MemberProfileDialog, { type MemberDetails } from "./member-profile-dialog
 
 type Tab = "Introduce" | "members" | "top20" | "news";
 type NavSection = "home" | "about" | "members" | "stories" | "news";
-type RosterYear = 2023 | 2024 | 2025 | 2026;
+type RosterYear = 2026;
 type MemberGroup = "Mentor" | "Supporter" | "Leadership" | "Member";
 
 type MemberProfile = MemberDetails & {
@@ -42,12 +42,12 @@ function newsStoryKey(story: FaerieEvent) {
 }
 
 const eventStories: Record<string, string> = {
-  "02.07-Kick Off — 02/07": "Faerie 2026 bắt đầu bằng một buổi gặp gỡ để các thành viên trong đội ngũ điều hành nhìn về cùng một hướng. Đây là dịp cả nhà làm quen, chia sẻ tinh thần chung và mở ra chương đầu tiên của hành trình mới.\n\nTừ điểm khởi đầu ấy, những kế hoạch được đặt xuống bàn và câu chuyện Faerie 2026 dần thành hình. Bộ ảnh ghi lại những gương mặt, cuộc gặp gỡ và không khí của ngày mở màn.",
-  "15.07-Họp Offline lần đầu": "Sau những lần trò chuyện qua màn hình, Faerie có buổi họp trực tiếp đầu tiên. Những cái tên quen thuộc nay có thể ngồi cạnh nhau, cùng trao đổi và bắt đầu hiểu nhau nhiều hơn.\n\nBuổi gặp gỡ không chỉ để nói về kế hoạch phía trước mà còn là một bước nhỏ để tập thể trở nên gần gũi. Những khung hình bên dưới lưu lại khoảnh khắc đầu tiên ấy.",
+  "02.07-Khởi động đội ngũ Faerie": "Faerie 2026 bắt đầu bằng một buổi gặp gỡ để các thành viên trong đội ngũ điều hành nhìn về cùng một hướng. Đây là dịp cả nhà làm quen, chia sẻ tinh thần chung và mở ra chương đầu tiên của hành trình mới.\n\nTừ điểm khởi đầu ấy, những kế hoạch được đặt xuống bàn và câu chuyện Faerie 2026 dần thành hình. Bộ ảnh ghi lại những gương mặt, cuộc gặp gỡ và không khí của ngày mở màn.",
+  "15.07-Buổi họp trực tiếp đầu tiên": "Sau những lần trò chuyện qua màn hình, Faerie có buổi họp trực tiếp đầu tiên. Những cái tên quen thuộc nay có thể ngồi cạnh nhau, cùng trao đổi và bắt đầu hiểu nhau nhiều hơn.\n\nBuổi gặp gỡ không chỉ để nói về kế hoạch phía trước mà còn là một bước nhỏ để tập thể trở nên gần gũi. Những khung hình bên dưới lưu lại khoảnh khắc đầu tiên ấy.",
   "16.08-Team Building": "Team Building là một ngày dành cho việc cùng nhau thử thách và phối hợp. Mỗi hoạt động là cơ hội để thành viên Faerie quan sát, lắng nghe và tìm ra cách đồng hành với nhau.\n\nĐiều còn lại sau một ngày kết nối là sự thấu hiểu và tinh thần đồng đội. Cùng nhìn lại những khoảnh khắc đã góp phần đưa cả nhà gần nhau hơn.",
-  "25.08-Kick Off — 25/08": "Chặng đường mới của Faerie được khởi động trong buổi Kick Off ngày 25/8. Cả nhà cùng gặp gỡ, chia sẻ những mục tiêu trước mắt và chuẩn bị tinh thần cho các hoạt động tiếp theo.\n\nMỗi dấu mốc bắt đầu đều mang theo sự háo hức riêng. Những bức ảnh ở đây là lát cắt của ngày cả tập thể cùng hướng về một hành trình mới.",
-  "02.09-Chào Mừng Quốc Khánh": "Trong không khí Quốc khánh, Faerie cùng lưu giữ những khoảnh khắc mang sắc màu Việt Nam. Đây là dịp để cả nhà hòa chung niềm vui và thể hiện niềm tự hào theo cách của mình.\n\nCùng xem lại những hình ảnh của hoạt động Chào Mừng Quốc Khánh, nơi tinh thần tập thể Faerie gặp gỡ không khí của ngày lễ.",
-  "03.09-Welcome Day 1": "Welcome Day đầu tiên mở ra những cuộc gặp gỡ giữa Faerie và các gương mặt mới tại FPTU HCMC. Từ lời chào, nụ cười đến những tương tác ban đầu, mỗi khoảnh khắc đều góp phần tạo nên không khí ngày hội.\n\nVới Faerie, đây là điểm bắt đầu của những kết nối mới. Bộ ảnh bên dưới ghi lại năng lượng và những dấu ấn đầu tiên của Welcome Day.",
+  "25.08-Kick Off Faerie 2026": "Chặng đường mới của Faerie được khởi động trong buổi Kick Off ngày 25/08. Cả nhà cùng gặp gỡ, chia sẻ những mục tiêu trước mắt và chuẩn bị tinh thần cho các hoạt động tiếp theo.\n\nMỗi dấu mốc bắt đầu đều mang theo sự háo hức riêng. Những bức ảnh ở đây là lát cắt của ngày cả tập thể cùng hướng về một hành trình mới.",
+  "02.09-Chào mừng Quốc khánh": "Trong không khí Quốc khánh, Faerie cùng lưu giữ những khoảnh khắc mang sắc màu Việt Nam. Đây là dịp để cả nhà hòa chung niềm vui và thể hiện niềm tự hào theo cách của mình.\n\nCùng xem lại những hình ảnh của hoạt động Chào mừng Quốc khánh, nơi tinh thần tập thể Faerie gặp gỡ không khí của ngày lễ.",
+  "03.09-Welcome Day 1": "Welcome Day đầu tiên mở ra những cuộc gặp gỡ giữa Faerie và các gương mặt mới tại Đại học FPT TP.HCM. Từ lời chào, nụ cười đến những tương tác ban đầu, mỗi khoảnh khắc đều góp phần tạo nên không khí ngày hội.\n\nVới Faerie, đây là điểm bắt đầu của những kết nối mới. Bộ ảnh bên dưới ghi lại năng lượng và những dấu ấn đầu tiên của Welcome Day.",
   "04.09-Welcome Day 2": "Ngày thứ hai của Welcome Day tiếp nối lời chào mà Faerie dành cho các tân sinh viên. Thêm những cuộc gặp gỡ, thêm hoạt động và thêm những gương mặt góp mặt trong câu chuyện của nhà.\n\nTừ ngày đầu tiên đến ngày thứ hai, điều đáng nhớ vẫn là những kết nối được tạo ra. Cùng nhìn lại những hình ảnh và kỷ niệm của Welcome Day 2.",
 };
 
@@ -243,13 +243,14 @@ function EventPhotoGallery({ images, title }: { images: string[]; title: string 
 
 const events2026: FaerieEvent[] = [
     {
+      id: "2026-02-07-kick-off",
       date: "02.07",
       year: "2026",
-      title: "Kick Off — 02/07",
+      title: "Khởi động đội ngũ Faerie",
       description:
         "Cột mốc mở đầu hành trình Faerie 2026 — gặp gỡ đội ngũ điều hành, thống nhất tinh thần và cùng nhau viết chương đầu tiên.",
-      tag: "Opening",
-      location: "FPTU HCMC Campus",
+      tag: "Gặp gỡ đội ngũ",
+      location: "FPTU TP.HCM",
       tone: "mint",
       images: [
         "images/events/2026/kickoff/KickOff2026.webp",
@@ -262,12 +263,13 @@ const events2026: FaerieEvent[] = [
       ],
     },
     {
+      id: "2026-15-07-hop-offline-lan-dau",
       date: "15.07",
       year: "2026",
-      title: "Họp Offline lần đầu",
+      title: "Buổi họp trực tiếp đầu tiên",
       description:
         "Buổi gặp mặt trực tiếp đầu tiên của cả nhà, nơi những cái tên trên màn hình trở thành bạn bè và những kế hoạch bắt đầu thành hình.",
-      tag: "Meet up",
+      tag: "Gặp gỡ",
       location: "TP.HCM",
       tone: "fern",
       images: [
@@ -286,7 +288,7 @@ const events2026: FaerieEvent[] = [
       title: "Team Building",
       description:
         "Một ngày cùng thử thách, phối hợp và kết nối để mỗi thành viên hiểu nhau hơn, đồng lòng hơn trên hành trình Faerie.",
-      tag: "Teamwork",
+      tag: "Kết nối",
       location: "TP.HCM",
       tone: "mint",
       images: [
@@ -301,13 +303,14 @@ const events2026: FaerieEvent[] = [
       ],
     },
     {
+      id: "2026-25-08-kick-off",
       date: "25.08",
       year: "2026",
-      title: "Kick Off — 25/08",
+      title: "Kick Off Faerie 2026",
       description:
         "Cột mốc khởi động chặng đường mới, nơi cả nhà cùng gặp gỡ, chia sẻ mục tiêu và sẵn sàng tạo nên những dấu ấn tiếp theo.",
       tag: "Kick Off",
-      location: "FPTU HCMC Campus",
+      location: "FPTU TP.HCM",
       tone: "fern",
       images: [
         "images/events/2026/kickoff-august/KickOff_1.webp",
@@ -318,13 +321,14 @@ const events2026: FaerieEvent[] = [
       ],
     },
     {
+      id: "2026-02-09-chao-mung-quoc-khanh",
       date: "02.09",
       year: "2026",
-      title: "Chào Mừng Quốc Khánh",
+      title: "Chào mừng Quốc khánh",
       description:
         "Faerie cùng hòa chung không khí Quốc khánh, lưu lại những khoảnh khắc rực rỡ và niềm tự hào trong sắc màu Việt Nam.",
-      tag: "National Day",
-      location: "FPTU HCMC Campus",
+      tag: "Quốc khánh",
+      location: "FPTU TP.HCM",
       tone: "mint",
       images: [
         "images/events/2026/national-day/QK_1.webp",
@@ -340,9 +344,9 @@ const events2026: FaerieEvent[] = [
       year: "2026",
       title: "Welcome Day 1",
       description:
-        "Ngày đầu tiên Faerie chào đón những gương mặt mới bằng năng lượng, nụ cười và những kết nối đầu tiên tại FPTU HCMC.",
+        "Ngày đầu tiên Faerie chào đón những gương mặt mới bằng năng lượng, nụ cười và những kết nối đầu tiên tại Đại học FPT TP.HCM.",
       tag: "Welcome Day",
-      location: "FPTU HCMC Campus",
+      location: "FPTU TP.HCM",
       tone: "fern",
       images: [
         "images/events/2026/welcome-day-1/WD_1.webp",
@@ -358,7 +362,7 @@ const events2026: FaerieEvent[] = [
       description:
         "Welcome Day tiếp tục với thêm nhiều cuộc gặp gỡ, hoạt động và kỷ niệm, nối dài lời chào của nhà Faerie dành cho tân sinh viên.",
       tag: "Welcome Day",
-      location: "FPTU HCMC Campus",
+      location: "FPTU TP.HCM",
       tone: "mint",
       images: [
         "images/events/2026/welcome-day-2/WD2_1.webp",
@@ -368,127 +372,6 @@ const events2026: FaerieEvent[] = [
       ],
     },
 ];
-
-const roster2023: MemberProfile[] = [
-  { name: "Nguyễn Thành Phát", title: "Mentor", group: "Mentor" },
-  { name: "Lý Quốc Lâm", title: "Supporter", group: "Supporter" },
-  { name: "Trần Mai", title: "Leader Nhà", group: "Leadership" },
-  { name: "Vũ Thế Anh", title: "Sub Leader Nhà", group: "Leadership" },
-  { name: "Cao Minh Thư", title: "Sub Leader Ban Văn Hóa", group: "Leadership" },
-  { name: "Trần Thu Anh", title: "Leader Ban Media", group: "Leadership" },
-  { name: "Trịnh Hoàng Khang", title: "Leader Ban Kỹ Thuật", group: "Leadership" },
-  { name: "Lê Thùy Dương", title: "Leader Ban Nghệ Thuật", group: "Leadership" },
-  { name: "Vương Nguyễn Hồng Linh", title: "Sub Leader Ban Event", group: "Leadership" },
-  { name: "Dương Nguyễn Đông Quân", title: "Member", group: "Member" },
-  { name: "Lê Ngọc Trang", title: "Member", group: "Member" },
-  { name: "Nguyễn Ngọc Huy", title: "Member", group: "Member" },
-  { name: "Lưu Trí Tâm", title: "Member", group: "Member" },
-  { name: "Nguyễn Quốc Huy", title: "Member", group: "Member" },
-  { name: "Huỳnh Như Ý", title: "Member", group: "Member" },
-  { name: "Triệu Trần Như Huỳnh", title: "Member", group: "Member" },
-  { name: "Huỳnh Thị Trang Tường", title: "Member", group: "Member" },
-  { name: "Đồng Thành Đạt", title: "Member", group: "Member" },
-  { name: "Trương Thảo Vi", title: "Member", group: "Member" },
-  { name: "Phạm Thị Thu Hằng", title: "Member", group: "Member" },
-  { name: "Nguyễn Gia Linh", title: "Member", group: "Member" },
-  { name: "Nguyễn Võ Gia Hiếu", title: "Member", group: "Member" },
-  { name: "Lê Võ Gia Bảo", title: "Member", group: "Member" },
-  { name: "Võ Khôi Nguyên", title: "Member", group: "Member" },
-  { name: "Huỳnh Quốc Bảo", title: "Member", group: "Member" },
-  { name: "Hoàng Văn Đức Nhân", title: "Member", group: "Member" },
-  { name: "Nguyễn Thanh Nhật Tân", title: "Member", group: "Member" },
-  { name: "Nguyễn Thành Nhân", title: "Member", group: "Member" },
-  { name: "Phou Mảu Quang", title: "Member", group: "Member" },
-  { name: "Hoàng Thị Quỳnh Lan", title: "Member", group: "Member" },
-  { name: "Trần Nhất Huy", title: "Member", group: "Member" },
-  { name: "Lê Hoàng Phước", title: "Member", group: "Member" },
-  { name: "Nguyễn Hoàng Bảo Oanh", title: "Member", group: "Member" },
-];
-
-const roster2024: MemberProfile[] = [
-  { name: "Hoàng Đinh Anh Quốc", title: "Mentor", group: "Mentor" },
-  { name: "Nguyễn Hoàng Đức Phương", title: "Supporter", group: "Supporter" },
-  { name: "Trần Mai", title: "Leader Nhà", group: "Leadership" },
-  { name: "Vũ Thế Anh", title: "Sub Leader Nhà", group: "Leadership" },
-  { name: "Cao Minh Thư", title: "Sub Leader Ban Văn Hóa", group: "Leadership" },
-  { name: "Trần Thu Anh", title: "Leader Ban Media", group: "Leadership" },
-  { name: "Trịnh Hoàng Khang", title: "Leader Ban Kỹ Thuật", group: "Leadership" },
-  { name: "Lê Thùy Dương", title: "Leader Ban Nghệ Thuật", group: "Leadership" },
-  { name: "Vương Nguyễn Hồng Linh", title: "Sub Leader Ban Event", group: "Leadership" },
-  { name: "Dương Nguyễn Đông Quân", title: "Member", group: "Member" },
-  { name: "Lê Ngọc Trang", title: "Member", group: "Member" },
-  { name: "Nguyễn Ngọc Huy", title: "Member", group: "Member" },
-  { name: "Lưu Trí Tâm", title: "Member", group: "Member" },
-  { name: "Nguyễn Quốc Huy", title: "Member", group: "Member" },
-  { name: "Huỳnh Như Ý", title: "Member", group: "Member" },
-  { name: "Triệu Trần Như Huỳnh", title: "Member", group: "Member" },
-  { name: "Huỳnh Thị Trang Tường", title: "Member", group: "Member" },
-  { name: "Đồng Thành Đạt", title: "Member", group: "Member" },
-  { name: "Trương Thảo Vi", title: "Member", group: "Member" },
-  { name: "Phạm Thị Thu Hằng", title: "Member", group: "Member" },
-  { name: "Nguyễn Gia Linh", title: "Member", group: "Member" },
-  { name: "Nguyễn Võ Gia Hiếu", title: "Member", group: "Member" },
-  { name: "Lê Võ Gia Bảo", title: "Member", group: "Member" },
-  { name: "Võ Khôi Nguyên", title: "Member", group: "Member" },
-  { name: "Huỳnh Quốc Bảo", title: "Member", group: "Member" },
-  { name: "Hoàng Văn Đức Nhân", title: "Member", group: "Member" },
-  { name: "Nguyễn Thanh Nhật Tân", title: "Member", group: "Member" },
-  { name: "Nguyễn Thành Nhân", title: "Member", group: "Member" },
-  { name: "Phou Mảu Quang", title: "Member", group: "Member" },
-  { name: "Hoàng Thị Quỳnh Lan", title: "Member", group: "Member" },
-  { name: "Trần Nhất Huy", title: "Member", group: "Member" },
-  { name: "Lê Hoàng Phước", title: "Member", group: "Member" },
-  { name: "Nguyễn Hoàng Bảo Oanh", title: "Member", group: "Member" },
-];
-
-
-const roster2025: MemberProfile[] = [
-  { name: "Phùng Duy Tuấn", title: "Mentor", group: "Mentor" },
-  { name: "Hạ My", title: "Supporter", group: "Supporter" },
-  { name: "Lê Thị Khánh Linh", title: "Leader Nhà", group: "Leadership" },
-  { name: "Yến Khoa", title: "Leader Event", group: "Leadership" },
-  { name: "Bảo Anh", title: "Member", group: "Leadership" },
-  { name: "Thành Hoàng", title: "Member", group: "Leadership" },
-  { name: "Thanh Tú", title: "Leader Ban Nghệ thuật", group: "Leadership" },
-  { name: "Thanh Diệu", title: "Member", group: "Leadership" },
-  { name: "Lê Thùy Dương", title: "Leader Ban Nghệ Thuật", group: "Leadership" },
-  { name: "Nguyễn Quang Tâm", title: "Member", group: "Leadership" },
-  { name: "Mai Văn Trân", title: "Member", group: "Member" },
-  { name: "Nguyễn Kim Ngọc", title: "Member", group: "Member" },
-  { name: "Quang Giáp", title: "Member", group: "Member" },
-  { name: "Nguyễn Giang", title: "Member", group: "Member" },
-  { name: "Phùng Minh Phan", title: "Member", group: "Member" },
-  { name: "Trương Thảo Vi", title: "Member", group: "Member" },
-  { name: "Nguyễn Vũ Ánh Hồng", title: "Member", group: "Member" },
-  { name: "Adela Nguyễn", title: "Member", group: "Member" },
-  { name: "Nguyễn Thế Trường", title: "Member", group: "Member" },
-  { name: "Phan Nguyễn LyNa", title: "Member", group: "Member" },
-  { name: "Nguyễn Hồ Tú Quyên", title: "Member", group: "Member" },
-  { name: "Nhật Minh", title: "Member", group: "Member" },
-  { name: "Phạm Chiến", title: "Member", group: "Member" },
-  { name: "Minh Ánh", title: "Member", group: "Member" },
-  { name: "Trần Khánh Như", title: "Member", group: "Member" },
-  { name: "Khoai Lang", title: "Member", group: "Member" },
-  { name: "Nguyễn Hồ Hải Anh", title: "Member", group: "Member" },
-  { name: "Nguyễn Trọng Thuận", title: "Member", group: "Member" },
-  { name: "Nguyễn Hoàng", title: "Member", group: "Member" },
-  { name: "Nguyễn Thành Nhân", title: "Member", group: "Member" },
-  { name: "Phou Mảu Quang", title: "Member", group: "Member" },
-  { name: "Hoàng Thị Quỳnh Lan", title: "Member", group: "Member" },
-  { name: "Trần Nhất Huy", title: "Member", group: "Member" },
-  { name: "Lê Hoàng Phước", title: "Member", group: "Member" },
-  { name: "Nguyễn Hoàng Bảo Oanh", title: "Member", group: "Member" },
-];
-
-
-function makeMockRoster(names: string[]): MemberProfile[] {
-  return names.map((name, index) => {
-    if (index === 0) return { name, title: "Mentor", group: "Mentor" };
-    if (index === 1) return { name, title: "Supporter", group: "Supporter" };
-    if (index === 2) return { name, title: "Leader Nhà", group: "Leadership" };
-    return { name, title: "Member", group: "Member" };
-  });
-}
 
 function memberRoleRank(title: string) {
   if (title === "Mentor") return 0;
@@ -537,13 +420,6 @@ const roster2026: MemberProfile[] = ([
   { name: "Trương Thảo Vi", title: "Member", group: "Member" },
 ] satisfies MemberProfile[]).sort((first, second) => memberRoleRank(first.title) - memberRoleRank(second.title));
 
-const rosters: Record<RosterYear, MemberProfile[]> = {
-  2023: roster2023,
-  2024: roster2024,
-  2025: roster2025,
-  2026: roster2026,
-};
-
 const groupOrder: MemberGroup[] = ["Mentor", "Supporter", "Leadership", "Member"];
 const groupLabels: Record<MemberGroup, string> = {
   Mentor: "Mentor",
@@ -553,13 +429,6 @@ const groupLabels: Record<MemberGroup, string> = {
 };
 
 const memberPhotos: Partial<Record<RosterYear, Record<string, string>>> = {
-  2025: {
-    "Phùng Duy Tuấn": "images/members/2025/PhungDinhTuan.jpg",
-    "Hạ My": "images/members/2025/HaMy.jpg",
-    "Thành Hoàng": "images/members/2025/ThanhHoang.jpg",
-    "Nguyễn Quang Tâm": "images/members/2025/NguyenQuangTam.jpg",
-    "Mai Văn Trân": "images/members/2025/MaiVanTran.jpg",
-  },
   2026: {
     "Việt Phương": "images/members/2026/cards/01.webp",
     "Nguyễn Trần Hạ My": "images/members/2026/cards/02.webp",
@@ -863,7 +732,7 @@ export default function Home() {
                     <span>Xem thành viên nhà Faerie</span><b aria-hidden="true"></b>
                   </button>
                   <button className="v-button" onClick={() => switchTab("Introduce", "stories")}>
-                    <span>Xem stories của Faerie</span><b aria-hidden="true"></b>
+                    <span>Xem câu chuyện của Faerie</span><b aria-hidden="true"></b>
                   </button>
                 </div>
               </div>
@@ -884,7 +753,7 @@ export default function Home() {
             <div className="v-section-index" aria-hidden="true"><span>02</span><i /></div>
             <div className="v-section-heading" data-reveal>
               <div>
-                <p className="v-kicker"><span>STORIES</span> What&apos;s happening</p>
+                <p className="v-kicker"><span>STORIES</span> Hành trình Faerie</p>
                 <h2 className="v-story-title">FAERIE<br /><em>STORY {selectedArchiveYear}</em></h2>
               </div>
               <p>
@@ -912,7 +781,7 @@ export default function Home() {
                   >
                     <div className={`v-event-media ${event.tone} ${event.images?.length ? "has-photos" : ""}`}>
                       {event.images?.length ? (
-                        <EventPhotoGallery images={event.images} title={`${event.title} ${event.year}`} />
+                        <EventPhotoGallery images={event.images} title={event.title} />
                       ) : (
                         <div className="v-event-symbol" aria-hidden="true">{index === 0 ? "✦" : "∞"}</div>
                       )}
@@ -1048,11 +917,11 @@ export default function Home() {
             </div>
 
             <div className="role-filter" aria-label="Lọc theo vai trò" data-reveal>
-              <button className={role === "All" ? "active" : ""} onClick={() => setRole("All")}>
+              <button type="button" className={role === "All" ? "active" : ""} aria-pressed={role === "All"} onClick={() => setRole("All")}>
                 Tất cả <span>{currentMembers.length}</span>
               </button>
               {groupOrder.map((item) => (
-                <button key={item} className={role === item ? "active" : ""} onClick={() => setRole(item)}>
+                <button type="button" key={item} className={role === item ? "active" : ""} aria-pressed={role === item} onClick={() => setRole(item)}>
                   {groupLabels[item]} <span>{currentMembers.filter((person) => person.group === item).length}</span>
                 </button>
               ))}
