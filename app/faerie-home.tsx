@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import EventPromoDialog, { type PromoSettings } from "./event-promo-dialog";
 import MemberProfileDialog, { type MemberDetails } from "./member-profile-dialog";
+import { campusFromIpLocation, IP_CAMPUS_KEY, MANUAL_CAMPUS_KEY } from "./campus-routing";
 
 type Tab = "Introduce" | "members" | "top20" | "news";
 type NavSection = "home" | "about" | "members" | "stories" | "news";
@@ -480,7 +481,7 @@ const avatarTones = ["sage", "sun", "sky", "lilac", "coral", "lime"];
 
 export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }) {
   const isQuyNhon = campus === "quy-nhon";
-  const campusHref = isQuyNhon ? "../" : "./quy-nhon/";
+  const campusHref = isQuyNhon ? "../?campus=hcm" : "./quy-nhon/";
   const campusDestination = isQuyNhon ? "TP.HCM" : "Quy Nhơn 2026";
   const logoSrc = `${isQuyNhon ? "../" : ""}images/faerie-icon.png`;
   const [tab, setTab] = useState<Tab>("Introduce");
@@ -520,6 +521,55 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
     window.addEventListener("popstate", syncStoryFromUrl);
     return () => window.removeEventListener("popstate", syncStoryFromUrl);
   }, []);
+
+  useEffect(() => {
+    if (isQuyNhon) return;
+
+    const currentUrl = new URL(window.location.href);
+    if (currentUrl.searchParams.has("story")) return;
+    if (currentUrl.searchParams.get("campus") === "hcm") {
+      try { window.sessionStorage.setItem(MANUAL_CAMPUS_KEY, "hcm"); } catch { /* Storage may be disabled. */ }
+      return;
+    }
+
+    const quyNhonUrl = new URL("./quy-nhon/", currentUrl);
+    let manualChoice: string | null = null;
+    let cachedCampus: string | null = null;
+    try {
+      manualChoice = window.sessionStorage.getItem(MANUAL_CAMPUS_KEY);
+      cachedCampus = window.sessionStorage.getItem(IP_CAMPUS_KEY);
+    } catch { /* IP routing still works without browser storage. */ }
+
+    if (manualChoice === "hcm") return;
+    if (manualChoice === "quy-nhon" || cachedCampus === "quy-nhon") {
+      window.location.replace(quyNhonUrl.href);
+      return;
+    }
+    if (cachedCampus === "hcm") return;
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 2500);
+    void fetch("https://ipwho.is/?fields=success,city,country_code", {
+      signal: controller.signal,
+      cache: "no-store",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+    }).then((response) => response.ok ? response.json() : null)
+      .then((location: unknown) => {
+        if (controller.signal.aborted) return;
+        const detectedCampus = campusFromIpLocation(location);
+        if (!detectedCampus) return;
+        try { window.sessionStorage.setItem(IP_CAMPUS_KEY, detectedCampus); } catch { /* Storage may be disabled. */ }
+        if (detectedCampus === "quy-nhon") window.location.replace(quyNhonUrl.href);
+      })
+      .catch(() => { /* Keep TP.HCM as the fallback if lookup fails. */ })
+      .finally(() => window.clearTimeout(timeout));
+
+    return () => {
+      controller.abort();
+      window.clearTimeout(timeout);
+    };
+  }, [isQuyNhon]);
 
   useEffect(() => {
     if (isQuyNhon) return;
@@ -679,6 +729,11 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
     }
   };
 
+  const rememberCampusChoice = () => {
+    try { window.sessionStorage.setItem(MANUAL_CAMPUS_KEY, isQuyNhon ? "hcm" : "quy-nhon"); }
+    catch { /* The explicit HCM link also has a URL fallback. */ }
+  };
+
   return (
     <main className={`app-shell tab-${tab.toLowerCase()}${isQuyNhon ? " campus-quy-nhon" : ""}`}>
       <header className="site-header is-tactical">
@@ -700,10 +755,10 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
           <button type="button" className={navSection === "members" ? "active" : ""} aria-current={navSection === "members" ? "page" : undefined} onClick={() => switchTab("members")}>Members</button>
           <button type="button" className={navSection === "stories" ? "active" : ""} aria-current={navSection === "stories" ? "page" : undefined} onClick={() => switchTab("Introduce", "stories")}>Stories</button>
           <button type="button" className={navSection === "news" ? "active" : ""} aria-current={navSection === "news" ? "page" : undefined} onClick={() => switchTab("news")}>News</button>
-          <a className="campus-mobile-link" href={campusHref}>Faerie {campusDestination} <span aria-hidden="true">↗</span></a>
+          <a className="campus-mobile-link" href={campusHref} onClick={rememberCampusChoice}>Faerie {campusDestination} <span aria-hidden="true">↗</span></a>
         </nav>
 
-        <a className="header-note campus-switch" href={campusHref} aria-label={`Đến trang Faerie ${campusDestination}`} title={`Đến Faerie ${campusDestination}`}>{isQuyNhon ? "FAERIE 2026 · QUY NHƠN" : "EST. 2024 · TP.HCM"} <span aria-hidden="true">↗</span></a>
+        <a className="header-note campus-switch" href={campusHref} onClick={rememberCampusChoice} aria-label={`Đến trang Faerie ${campusDestination}`} title={`Đến Faerie ${campusDestination}`}>{isQuyNhon ? "FAERIE 2026 · QUY NHƠN" : "EST. 2024 · TP.HCM"} <span aria-hidden="true">↗</span></a>
       </header>
 
       {selectedStoryKey ? (

@@ -66,6 +66,7 @@ test("renders the full Quy Nhơn shell with empty members, stories and news", as
     assert.match(html, new RegExp(`>${label}<\\/button>`));
   }
   assert.match(html, /FAERIE 2026 · QUY NHƠN/);
+  assert.match(html, /href="\.\.\/\?campus=hcm"/);
   assert.match(html, /CHƯA CÓ CÂU CHUYỆN/);
   assert.match(html, /THÀNH VIÊN<\/small><strong>0<\/strong>/);
   assert.match(html, /\.\.\/images\/faerie-icon\.png/);
