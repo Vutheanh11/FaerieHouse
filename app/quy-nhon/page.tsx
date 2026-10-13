@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
+import FaerieHome from "../faerie-home";
 
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Faerie Quy Nhơn 2026 | Faerie House",
-  description: "Trang Faerie Quy Nhơn 2026 đang được chuẩn bị.",
+  description: "Khám phá không gian Faerie Quy Nhơn 2026. Thành viên, câu chuyện và tin tức sẽ được cập nhật sau.",
+  alternates: { canonical: "/quy-nhon/" },
+  openGraph: {
+    title: "Faerie Quy Nhơn 2026 | Faerie House",
+    description: "Không gian Faerie Quy Nhơn 2026 đang chờ những thành viên và câu chuyện đầu tiên.",
+    url: "/quy-nhon/",
+    type: "website",
+    locale: "vi_VN",
+  },
+  twitter: {
+    card: "summary",
+    title: "Faerie Quy Nhơn 2026 | Faerie House",
+    description: "Không gian Faerie Quy Nhơn 2026 đang chờ những thành viên và câu chuyện đầu tiên.",
+  },
   robots: { index: false, follow: true },
 };
 
 export default function QuyNhonPage() {
-  return (
-    <main className="quy-nhon-page">
-      <header className="quy-nhon-header">
-        <a className="quy-nhon-brand" href="../" aria-label="Về Faerie TP.HCM">FAERIE <span>HOUSE</span></a>
-        <span>2026 · QUY NHƠN</span>
-      </header>
-      <section className="quy-nhon-content" aria-labelledby="quy-nhon-title">
-        <p className="quy-nhon-kicker">FAERIE / QUY NHƠN / 2026</p>
-        <h1 id="quy-nhon-title">FAERIE<br /><em>QUY NHƠN.</em></h1>
-        <p className="quy-nhon-description">Trang của Faerie Quy Nhơn 2026 đang được chuẩn bị. Hình ảnh và thông tin thành viên sẽ được bổ sung sau.</p>
-        <a className="quy-nhon-back" href="../">← Về Faerie TP.HCM</a>
-      </section>
-      <footer className="quy-nhon-footer">ONE HOUSE. MANY STORIES.</footer>
-    </main>
-  );
+  return <FaerieHome campus="quy-nhon" />;
 }

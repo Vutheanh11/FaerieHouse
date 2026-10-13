@@ -478,19 +478,23 @@ function initials(name: string) {
 
 const avatarTones = ["sage", "sun", "sky", "lilac", "coral", "lime"];
 
-export default function Home() {
+export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }) {
+  const isQuyNhon = campus === "quy-nhon";
+  const campusHref = isQuyNhon ? "../" : "./quy-nhon/";
+  const campusDestination = isQuyNhon ? "TP.HCM" : "Quy Nhơn 2026";
+  const logoSrc = `${isQuyNhon ? "../" : ""}images/faerie-icon.png`;
   const [tab, setTab] = useState<Tab>("Introduce");
   const [navSection, setNavSection] = useState<NavSection>("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const year: RosterYear = 2026;
-  const [currentMembers, setCurrentMembers] = useState<MemberProfile[]>(roster2026);
-  const [newsItems, setNewsItems] = useState<FaerieEvent[]>([...events2026].reverse());
+  const [currentMembers, setCurrentMembers] = useState<MemberProfile[]>(isQuyNhon ? [] : roster2026);
+  const [newsItems, setNewsItems] = useState<FaerieEvent[]>(isQuyNhon ? [] : [...events2026].reverse());
   const [archiveYear, setArchiveYear] = useState("2026");
   const [selectedStoryKey, setSelectedStoryKey] = useState<string | null>(null);
   const [promoVisible, setPromoVisible] = useState(true);
   const [promoReady, setPromoReady] = useState(false);
   const [promoSettings, setPromoSettings] = useState<PromoSettings | null>(null);
-  const [newsLoading, setNewsLoading] = useState(true);
+  const [newsLoading, setNewsLoading] = useState(!isQuyNhon);
   const [newsError, setNewsError] = useState(false);
   const [role, setRole] = useState<MemberGroup | "All">("All");
   const [query, setQuery] = useState("");
@@ -499,6 +503,7 @@ export default function Home() {
   const closeMemberProfile = useCallback(() => setSelectedMember(null), []);
   const totalMembers = currentMembers.length;
   const archiveYears = useMemo(() => [...new Set(newsItems.map((story) => story.year))].sort((first, second) => Number(second) - Number(first)), [newsItems]);
+  const availableArchiveYears = archiveYears.length ? archiveYears : isQuyNhon ? ["2026"] : [];
   const selectedArchiveYear = archiveYears.includes(archiveYear) ? archiveYear : archiveYears[0] || "2026";
   const archiveStories = useMemo(() => newsItems.filter((story) => story.year === selectedArchiveYear).sort((first, second) => {
     const dateNumber = (story: FaerieEvent) => Number(`${story.year}${story.date.slice(3, 5)}${story.date.slice(0, 2)}`);
@@ -517,6 +522,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (isQuyNhon) return;
     const controller = new AbortController();
     let mounted = true;
     const timeout = window.setTimeout(() => controller.abort(), 90_000);
@@ -570,7 +576,7 @@ export default function Home() {
       controller.abort();
       window.clearTimeout(timeout);
     };
-  }, []);
+  }, [isQuyNhon]);
 
   useEffect(() => {
     const closeMenuOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setMenuOpen(false); };
@@ -674,11 +680,11 @@ export default function Home() {
   };
 
   return (
-    <main className={`app-shell tab-${tab.toLowerCase()}`}>
+    <main className={`app-shell tab-${tab.toLowerCase()}${isQuyNhon ? " campus-quy-nhon" : ""}`}>
       <header className="site-header is-tactical">
         <span ref={progressRef} className="site-progress" style={{ transform: "scaleX(0)" }} aria-hidden="true" />
         <button className="brand" onClick={() => switchTab("Introduce", "home")} aria-label="Về đầu trang Faerie">
-          <span className="brand-mark" aria-hidden="true"><img src="images/faerie-icon.png" alt="" /></span>
+          <span className="brand-mark" aria-hidden="true"><img src={logoSrc} alt="" /></span>
           <span>
             <strong>FAERIE</strong>
             <small>BROSIS · FPTU</small>
@@ -694,10 +700,10 @@ export default function Home() {
           <button type="button" className={navSection === "members" ? "active" : ""} aria-current={navSection === "members" ? "page" : undefined} onClick={() => switchTab("members")}>Members</button>
           <button type="button" className={navSection === "stories" ? "active" : ""} aria-current={navSection === "stories" ? "page" : undefined} onClick={() => switchTab("Introduce", "stories")}>Stories</button>
           <button type="button" className={navSection === "news" ? "active" : ""} aria-current={navSection === "news" ? "page" : undefined} onClick={() => switchTab("news")}>News</button>
-          <a className="campus-mobile-link" href="./quy-nhon/">Faerie Quy Nhơn 2026 <span aria-hidden="true">↗</span></a>
+          <a className="campus-mobile-link" href={campusHref}>Faerie {campusDestination} <span aria-hidden="true">↗</span></a>
         </nav>
 
-        <a className="header-note campus-switch" href="./quy-nhon/" aria-label="Đến trang Faerie Quy Nhơn 2026" title="Đến Faerie Quy Nhơn 2026">EST. 2024 · TP.HCM <span aria-hidden="true">↗</span></a>
+        <a className="header-note campus-switch" href={campusHref} aria-label={`Đến trang Faerie ${campusDestination}`} title={`Đến Faerie ${campusDestination}`}>{isQuyNhon ? "FAERIE 2026 · QUY NHƠN" : "EST. 2024 · TP.HCM"} <span aria-hidden="true">↗</span></a>
       </header>
 
       {selectedStoryKey ? (
@@ -705,19 +711,19 @@ export default function Home() {
       ) : tab === "Introduce" ? (
         <div className="valorant-intro page-enter">
           <section className="v-hero" aria-labelledby="faerie-hero-title">
-            <img
+            {!isQuyNhon && <img
               className="v-hero-background"
               src="images/events/2026/team-building/TeamBuilding_1.webp"
               alt="Các thành viên Faerie cùng nhau trong buổi Team Building ngoài trời"
               fetchPriority="high"
-            />
+            />}
             <div className="v-hero-wash" aria-hidden="true" />
             <div className="v-grid" aria-hidden="true" />
-            <span className="v-coordinate v-coordinate-top" aria-hidden="true">10°50&apos;N / 106°40&apos;E</span>
-            <span className="v-coordinate v-coordinate-side" aria-hidden="true">FAERIE // FPTU HCMC // 2026</span>
+            <span className="v-coordinate v-coordinate-top" aria-hidden="true">{isQuyNhon ? "QUY NHƠN / 2026" : <>10°50&apos;N / 106°40&apos;E</>}</span>
+            <span className="v-coordinate v-coordinate-side" aria-hidden="true">{`FAERIE // ${isQuyNhon ? "QUY NHON" : "FPTU HCMC"} // 2026`}</span>
 
             <div className="v-hero-content section-shell">
-              <p className="v-kicker"><span>01</span> Website chính thức của nhà Faerie · Brosis FPTU TP.HCM</p>
+              <p className="v-kicker"><span>01</span> {isQuyNhon ? "Faerie Quy Nhơn · 2026" : "Website chính thức của nhà Faerie · Brosis FPTU TP.HCM"}</p>
               <h1 id="faerie-hero-title">
                 <span>WELCOME</span>
                 <span>TO</span>
@@ -726,7 +732,9 @@ export default function Home() {
               </h1>
               <div className="v-hero-bottom">
                 <p>
-                  Faerie là một mảnh ghép của dự án Brothers & Sisters tại Đại học FPT TP.HCM, nơi các anh chị đồng hành, kết nối và hỗ trợ tân sinh viên. Tại đây, bạn có thể tìm hiểu thành viên của nhà, xem các hoạt động nổi bật và đọc những câu chuyện của Faerie.
+                  {isQuyNhon
+                    ? "Chào mừng đến với Faerie Quy Nhơn 2026. Không gian dành cho thành viên, hoạt động và những câu chuyện của nhà đã sẵn sàng; nội dung sẽ được cập nhật khi có thông tin chính thức."
+                    : "Faerie là một mảnh ghép của dự án Brothers & Sisters tại Đại học FPT TP.HCM, nơi các anh chị đồng hành, kết nối và hỗ trợ tân sinh viên. Tại đây, bạn có thể tìm hiểu thành viên của nhà, xem các hoạt động nổi bật và đọc những câu chuyện của Faerie."}
                 </p>
                 <div className="v-actions">
                   <button className="v-button" onClick={() => switchTab("members")}>
@@ -745,7 +753,7 @@ export default function Home() {
 
           <section className="v-signal" id="mission" aria-label="Những con số của Faerie">
             <div className="v-signal-lead"><span aria-hidden="true"></span> ONE HOUSE. MANY STORIES.</div>
-            <div><small>THẾ HỆ</small><strong>3</strong><span>tiếp nối</span></div>
+            {isQuyNhon ? <div><small>ĐỊA ĐIỂM</small><strong>QN</strong><span>Quy Nhơn</span></div> : <div><small>THẾ HỆ</small><strong>3</strong><span>tiếp nối</span></div>}
             <div><small>THÀNH VIÊN</small><strong>{totalMembers}</strong><span>mảnh ghép</span></div>
             <div><small>NĂM {selectedArchiveYear}</small><strong>{archiveStories.length.toString().padStart(2, "0")}</strong><span>câu chuyện</span></div>
           </section>
@@ -758,14 +766,15 @@ export default function Home() {
                 <h2 className="v-story-title">FAERIE<br /><em>STORY {selectedArchiveYear}</em></h2>
               </div>
               <p>
-                Mỗi câu chuyện là một tọa độ trong hành trình chung - nơi chúng mình gặp gỡ,
-                thử sức và biến những ngày bình thường thành ký ức đáng nhớ.
+                {isQuyNhon
+                  ? "Hành trình Faerie Quy Nhơn 2026 sẽ được lưu lại ở đây khi những hoạt động đầu tiên được công bố."
+                  : "Mỗi câu chuyện là một tọa độ trong hành trình chung - nơi chúng mình gặp gỡ, thử sức và biến những ngày bình thường thành ký ức đáng nhớ."}
               </p>
             </div>
 
             <div className="story-year-filter" aria-label="Lọc hành trình Faerie theo năm">
               <span>JOURNEY / ARCHIVE</span>
-              {archiveYears.map((yearOption) => (
+              {availableArchiveYears.map((yearOption) => (
                 <button type="button" key={yearOption} className={selectedArchiveYear === yearOption ? "active" : ""} aria-pressed={selectedArchiveYear === yearOption} onClick={() => setArchiveYear(yearOption)}>
                   {yearOption} <small>{newsItems.filter((story) => story.year === yearOption).length.toString().padStart(2, "0")}</small>
                 </button>
@@ -801,6 +810,7 @@ export default function Home() {
                     </div>
                   </article>
                 ))}
+              {isQuyNhon && archiveStories.length === 0 && <div className="campus-empty-state" role="status"><span>STORIES / 00</span><h3>CHƯA CÓ CÂU CHUYỆN.</h3><p>Các hoạt động của Faerie Quy Nhơn 2026 sẽ xuất hiện tại đây.</p></div>}
             </div>
           </section>
 
@@ -810,16 +820,21 @@ export default function Home() {
               <p className="v-kicker"><span>03</span> Our mission</p>
               <h2>KHÔNG CHỈ<br />LÀ NGƯỜI<br /><em>DẪN ĐƯỜNG.</em></h2>
               <p className="v-about-lead">
-                Brothers &amp; Sisters (Brosis) là những sinh viên đi trước hỗ trợ tân sinh viên trong những ngày đầu tại Đại học FPT TP.HCM.
-                Faerie là một nhà Brosis trong cộng đồng ấy: cùng giải đáp, tham gia hoạt động, học hỏi và xây dựng những kết nối lâu dài.
+                {isQuyNhon
+                  ? "Brothers & Sisters (Brosis) là những sinh viên đi trước đồng hành với tân sinh viên. Faerie Quy Nhơn 2026 sẽ giới thiệu đội ngũ và hành trình của mình tại đây khi thông tin được cập nhật."
+                  : "Brothers & Sisters (Brosis) là những sinh viên đi trước hỗ trợ tân sinh viên trong những ngày đầu tại Đại học FPT TP.HCM. Faerie là một nhà Brosis trong cộng đồng ấy: cùng giải đáp, tham gia hoạt động, học hỏi và xây dựng những kết nối lâu dài."}
               </p>
             </div>
 
-            <div className="v-about-visual" aria-label="Khoảnh khắc của các thành viên Faerie" data-reveal>
-              <figure className="v-photo-main">
-                <img src="images/events/2026/offline/HopOffline_3.webp" alt="Thành viên Faerie cùng trò chuyện và vỗ tay trong buổi họp offline" loading="lazy" decoding="async" />
-                <figcaption>FAERIE OFFLINE // 2026</figcaption>
-              </figure>
+            <div className="v-about-visual" aria-label={isQuyNhon ? "Chỗ dành cho hình ảnh Faerie Quy Nhơn" : "Khoảnh khắc của các thành viên Faerie"} data-reveal>
+              {isQuyNhon ? (
+                <div className="v-photo-main campus-photo-placeholder"><span>FAERIE<br />QUY NHƠN</span><small>HÌNH ẢNH SẼ ĐƯỢC CẬP NHẬT</small></div>
+              ) : (
+                <figure className="v-photo-main">
+                  <img src="images/events/2026/offline/HopOffline_3.webp" alt="Thành viên Faerie cùng trò chuyện và vỗ tay trong buổi họp offline" loading="lazy" decoding="async" />
+                  <figcaption>FAERIE OFFLINE // 2026</figcaption>
+                </figure>
+              )}
               <span className="v-photo-code" aria-hidden="true">FÆ / 03 — 26</span>
             </div>
 
@@ -835,23 +850,25 @@ export default function Home() {
             <div className="student-guide-intro" data-reveal>
               <p className="v-kicker"><span>04</span> Dành cho tân sinh viên</p>
               <h2 id="student-guide-title">BẮT ĐẦU TỪ<br /><em>MỘT LỜI CHÀO.</em></h2>
-              <p>Bạn mới đến Đại học FPT TP.HCM? Brosis là những sinh viên đi trước sẵn sàng chia sẻ trải nghiệm và đồng hành trong những ngày đầu. Hãy khám phá câu chuyện của Faerie, gặp các thành viên và kết nối với nhà khi cần hỏi thêm.</p>
+              <p>{isQuyNhon
+                ? "Bạn mới tìm hiểu về Faerie Quy Nhơn? Đây sẽ là nơi bạn gặp các thành viên và theo dõi những hoạt động của nhà. Thông tin sẽ được bổ sung khi sẵn sàng."
+                : "Bạn mới đến Đại học FPT TP.HCM? Brosis là những sinh viên đi trước sẵn sàng chia sẻ trải nghiệm và đồng hành trong những ngày đầu. Hãy khám phá câu chuyện của Faerie, gặp các thành viên và kết nối với nhà khi cần hỏi thêm."}</p>
               <div className="student-guide-actions">
                 <button type="button" onClick={() => switchTab("members")}>Gặp các thành viên <span aria-hidden="true">↗</span></button>
-                <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noopener noreferrer">Nhắn Faerie trên Facebook <span aria-hidden="true">↗</span></a>
+                {isQuyNhon ? <button type="button" onClick={() => switchTab("news")}>Xem News <span aria-hidden="true">↗</span></button> : <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noopener noreferrer">Nhắn Faerie trên Facebook <span aria-hidden="true">↗</span></a>}
               </div>
             </div>
             <div className="student-faq" aria-label="Câu hỏi thường gặp cho tân sinh viên" data-reveal>
               <h3>HỎI NHANH / FAQ</h3>
-              <details><summary>Faerie là gì?</summary><p>Faerie là một nhà Brothers &amp; Sisters tại Đại học FPT TP.HCM, nơi các thế hệ sinh viên kết nối và cùng tham gia hoạt động.</p></details>
+              <details><summary>Faerie là gì?</summary><p>{isQuyNhon ? "Faerie Quy Nhơn 2026 là không gian để ghi lại các thành viên và hoạt động của nhà. Nội dung đang chờ được cập nhật." : "Faerie là một nhà Brothers & Sisters tại Đại học FPT TP.HCM, nơi các thế hệ sinh viên kết nối và cùng tham gia hoạt động."}</p></details>
               <details><summary>Brosis có thể đồng hành với mình thế nào?</summary><p>Brosis là những sinh viên đi trước chia sẻ kinh nghiệm, giải đáp thắc mắc và cùng tân sinh viên làm quen với môi trường học tập, sinh hoạt.</p></details>
               <details><summary>Mình xem hoạt động của nhà ở đâu?</summary><p>Vào mục Stories để xem hành trình theo năm; News lưu các bài viết và hình ảnh của từng hoạt động.</p></details>
-              <details><summary>Mình liên hệ Faerie bằng cách nào?</summary><p>Nhắn qua <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noopener noreferrer">Facebook Faerie</a> hoặc gửi email đến <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>.</p></details>
+              <details><summary>Mình liên hệ Faerie bằng cách nào?</summary><p>{isQuyNhon ? "Thông tin liên hệ của Faerie Quy Nhơn sẽ được cập nhật sau." : <>Nhắn qua <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noopener noreferrer">Facebook Faerie</a> hoặc gửi email đến <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>.</>}</p></details>
             </div>
           </section>
 
           <section className="v-manifesto">
-            <img src="images/events/2026/team-building/TeamBuilding_7.webp" alt="Các thành viên Faerie chụp ảnh cùng nhau tại Team Building 2026" loading="lazy" decoding="async" />
+            {!isQuyNhon && <img src="images/events/2026/team-building/TeamBuilding_7.webp" alt="Các thành viên Faerie chụp ảnh cùng nhau tại Team Building 2026" loading="lazy" decoding="async" />}
             <div className="v-manifesto-wash" aria-hidden="true" />
             <div className="v-manifesto-copy section-shell" data-reveal>
               <p className="v-kicker"><span>05</span> Ready for the next chapter?</p>
@@ -860,7 +877,7 @@ export default function Home() {
                 <span>Khám phá thành viên</span><b aria-hidden="true">→</b>
               </button>
             </div>
-            <span className="v-manifesto-code" aria-hidden="true">FAERIE // BROSIS // FPTU HCMC</span>
+            <span className="v-manifesto-code" aria-hidden="true">FAERIE // BROSIS // {isQuyNhon ? "QUY NHON" : "FPTU HCMC"}</span>
           </section>
         </div>
       ) : tab === "members" ? (
@@ -868,17 +885,18 @@ export default function Home() {
           <section className="members-hero tactical-hero section-shell">
             <div className="tactical-grid" aria-hidden="true" />
             <div className="tactical-hero-word" aria-hidden="true">MEMBERS</div>
-            <span className="tactical-coordinate" aria-hidden="true">03 // ROSTER DATABASE // FPTU HCMC</span>
+            <span className="tactical-coordinate" aria-hidden="true">03 // ROSTER DATABASE // {isQuyNhon ? "QUY NHON" : "FPTU HCMC"}</span>
             <div className="members-hero-copy">
               <p className="tactical-kicker"><span>01</span> The people behind the magic</p>
               <h1>MEET THE<br /><em>FAERIE FAMILY.</em></h1>
             </div>
             <div className="members-intro" data-reveal>
               <p>
-                Mỗi thành viên là một màu sắc riêng, cùng góp lại thành câu chuyện Faerie 2026.
-                Tìm những gương mặt đang đồng hành với ngôi nhà trong năm nay.
+                {isQuyNhon
+                  ? "Đây sẽ là nơi giới thiệu các thành viên của Faerie Quy Nhơn 2026. Danh sách hiện chưa được cập nhật."
+                  : "Mỗi thành viên là một màu sắc riêng, cùng góp lại thành câu chuyện Faerie 2026. Tìm những gương mặt đang đồng hành với ngôi nhà trong năm nay."}
               </p>
-              <div className="members-stat"><strong>{totalMembers}</strong><span>members<br />&amp; growing</span></div>
+              <div className="members-stat"><strong>{totalMembers}</strong><span>{isQuyNhon ? <>thành viên<br />đang cập nhật</> : <>members<br />&amp; growing</>}</span></div>
               <button className="members-top-link" type="button" onClick={() => switchTab("top20")}>Khám phá Top 20 <span aria-hidden="true">↗</span></button>
             </div>
 
@@ -890,7 +908,7 @@ export default function Home() {
                 <p className="tactical-kicker"><span>02</span> Select your roster</p>
                 <h2>CHOOSE YOUR<br /><em>CREW.</em></h2>
               </div>
-              <p>Tìm kiếm từng gương mặt, vai trò và câu chuyện của các thành viên Faerie 2026.</p>
+              <p>{isQuyNhon ? "Danh sách Faerie Quy Nhơn 2026 sẽ được cập nhật tại đây." : "Tìm kiếm từng gương mặt, vai trò và câu chuyện của các thành viên Faerie 2026."}</p>
             </div>
 
             <div className="directory-toolbar" data-reveal>
@@ -975,7 +993,7 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div className="empty-state"><span>✦</span><h3>Chưa tìm thấy thành viên</h3><p>Thử một tên hoặc vai trò khác nhé.</p></div>
+              <div className="empty-state" role="status"><span>✦</span><h3>{isQuyNhon ? "Chưa có thành viên" : "Chưa tìm thấy thành viên"}</h3><p>{isQuyNhon ? "Thông tin thành viên Faerie Quy Nhơn 2026 sẽ được bổ sung sau." : "Thử một tên hoặc vai trò khác nhé."}</p></div>
             )}
           </section>
         </div>
@@ -984,9 +1002,9 @@ export default function Home() {
           <section className="news-hero section-shell">
             <p className="tactical-kicker"><span>01</span> Faerie House · Journal</p>
             <h1>FAERIE<br /><em>NEWS.</em></h1>
-            <p>Những hoạt động gần đây của nhà Faerie, từ khoảnh khắc mới nhất trở về ngày đầu tiên.</p>
+            <p>{isQuyNhon ? "Bài viết và hoạt động của Faerie Quy Nhơn 2026 sẽ được đăng tại đây." : "Những hoạt động gần đây của nhà Faerie, từ khoảnh khắc mới nhất trở về ngày đầu tiên."}</p>
             <span className="news-total">{newsItems.length.toString().padStart(2, "0")} CÂU CHUYỆN</span>
-            <p className="news-sync-status" role="status" aria-live="polite">{newsLoading ? "Đang đồng bộ tin mới từ Faerie…" : newsError ? "Tin mới tạm thời chưa kết nối; đang hiển thị các hoạt động có sẵn." : "Tin tức đã được cập nhật."}</p>
+            <p className="news-sync-status" role="status" aria-live="polite">{isQuyNhon ? "Chưa có bài đăng." : newsLoading ? "Đang đồng bộ tin mới từ Faerie…" : newsError ? "Tin mới tạm thời chưa kết nối; đang hiển thị các hoạt động có sẵn." : "Tin tức đã được cập nhật."}</p>
           </section>
           <section className="news-feed section-shell" aria-label="Tin tức Faerie">
             {newsItems.map((event) => (
@@ -1018,6 +1036,7 @@ export default function Home() {
                 </a>
               </article>
             ))}
+            {isQuyNhon && newsItems.length === 0 && <div className="campus-empty-state" role="status"><span>NEWS / 00</span><h2>CHƯA CÓ BÀI ĐĂNG.</h2><p>News của Faerie Quy Nhơn 2026 sẽ xuất hiện ở đây.</p></div>}
           </section>
         </div>
       ) : (
@@ -1036,7 +1055,7 @@ export default function Home() {
                 </button>
               </div>
               <p>
-                Danh sách vẫn đang được viết. Hai mươi vị trí, hai mươi câu chuyện mới — và gương mặt tiếp theo có thể là bạn.
+                {isQuyNhon ? "Danh sách Top 20 của Faerie Quy Nhơn 2026 hiện chưa có thành viên nào." : "Danh sách vẫn đang được viết. Hai mươi vị trí, hai mươi câu chuyện mới — và gương mặt tiếp theo có thể là bạn."}
               </p>
             </div>
             <div className="champion-card champion-card-mystery" data-reveal>
@@ -1054,7 +1073,7 @@ export default function Home() {
               <p className="tactical-kicker"><span>02</span> Faerie Hall of Fame · 2026</p>
               <h2>WHO GONNA BE<br /><em>THE NEXT TOP 20?</em></h2>
               <p className="top-2026-copy">
-                Chưa có cái tên nào được chốt. Hành trình 2026 đang diễn ra — cùng tạo dấu ấn để trở thành một trong hai mươi gương mặt tiếp theo của Faerie.
+                {isQuyNhon ? "Chưa có cái tên nào được chốt cho Faerie Quy Nhơn 2026. Các vị trí sẽ được cập nhật sau." : "Chưa có cái tên nào được chốt. Hành trình 2026 đang diễn ra — cùng tạo dấu ấn để trở thành một trong hai mươi gương mặt tiếp theo của Faerie."}
               </p>
               <div className="top-2026-slots" aria-label="20 vị trí đang chờ những gương mặt nổi bật">
                 {Array.from({ length: 20 }, (_, index) => (
@@ -1075,7 +1094,7 @@ export default function Home() {
         />
       )}
 
-      {promoReady && promoVisible && promoSettings?.enabled !== false && (
+      {!isQuyNhon && promoReady && promoVisible && promoSettings?.enabled !== false && (
         <EventPromoDialog
           event={promoEvent}
           settings={promoSettings}
@@ -1088,14 +1107,16 @@ export default function Home() {
       )}
 
       <footer className="tactical-footer">
-        <div className="footer-brand"><span><img src="images/faerie-icon.png" alt="" /></span><strong>FAERIE</strong></div>
-        <p>Brothers &amp; Sisters · FPT University<br />TP.HCM Campus</p>
+        <div className="footer-brand"><span><img src={logoSrc} alt="" /></span><strong>FAERIE</strong></div>
+        <p>{isQuyNhon ? <>Faerie House · 2026<br />Quy Nhơn</> : <>Brothers &amp; Sisters · FPT University<br />TP.HCM Campus</>}</p>
         <p className="footer-note">MADE WITH KINDNESS<br />FOR EVERY NEW CHAPTER.</p>
         <div className="footer-contact">
-          <span>CONTACT // FAERIE</span>
-          <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>
-          <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noreferrer">Facebook Faerie ↗</a>
-          <address>Lô E2a-7, Đường D1 Khu Công nghệ cao, P. Long Thạnh Mỹ, TP. Thủ Đức, Ho Chi Minh City, Vietnam</address>
+          <span>CONTACT // FAERIE {isQuyNhon ? "QUY NHƠN" : ""}</span>
+          {isQuyNhon ? <p>Thông tin liên hệ sẽ được cập nhật.</p> : <>
+            <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>
+            <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noreferrer">Facebook Faerie ↗</a>
+            <address>Lô E2a-7, Đường D1 Khu Công nghệ cao, P. Long Thạnh Mỹ, TP. Thủ Đức, Ho Chi Minh City, Vietnam</address>
+          </>}
           <a className="footer-credit" href="https://www.facebook.com/vu.bootloop" target="_blank" rel="noopener noreferrer">Made by Vu The Anh ↗</a>
         </div>
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Lên đầu trang ↑</button>

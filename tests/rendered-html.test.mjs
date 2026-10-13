@@ -56,14 +56,21 @@ test("renders the Faerie website and its current navigation", async () => {
   assert.doesNotMatch(html, /site-watermark-overlay|faerie-credit-watermark/);
 });
 
-test("renders an empty Quy Nhơn 2026 page with a return link", async () => {
+test("renders the full Quy Nhơn shell with empty members, stories and news", async () => {
   const response = await render("/quy-nhon");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /FAERIE \/ QUY NHƠN \/ 2026/);
-  assert.match(html, /Hình ảnh và thông tin thành viên sẽ được bổ sung sau/);
-  assert.match(html, /Về Faerie TP\.HCM/);
-  assert.doesNotMatch(html, /TeamBuilding_1|member-profile-card|member-roster/);
+  assert.match(html, /class="app-shell tab-introduce campus-quy-nhon"/);
+  assert.match(html, /id="site-main-nav"/);
+  for (const label of ["Home", "About", "Members", "Stories", "News"]) {
+    assert.match(html, new RegExp(`>${label}<\\/button>`));
+  }
+  assert.match(html, /FAERIE 2026 · QUY NHƠN/);
+  assert.match(html, /CHƯA CÓ CÂU CHUYỆN/);
+  assert.match(html, /THÀNH VIÊN<\/small><strong>0<\/strong>/);
+  assert.match(html, /\.\.\/images\/faerie-icon\.png/);
+  assert.doesNotMatch(html, /TeamBuilding_1|HopOffline_3|faeriesolace@gmail.com|TP\.HCM Campus/);
+  assert.doesNotMatch(html, /class="event-promo-dialog"|class="member-card"|class="news-card"/);
 });
 
 test("keeps optimized event photos available to the published site", async () => {
