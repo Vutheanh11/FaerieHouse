@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(path = "/") {
@@ -71,6 +71,12 @@ test("renders the full Quy Nhơn shell with empty members, stories and news", as
   assert.match(html, /\.\.\/images\/faerie-icon\.png/);
   assert.doesNotMatch(html, /TeamBuilding_1|HopOffline_3|faeriesolace@gmail.com|TP\.HCM Campus/);
   assert.doesNotMatch(html, /class="event-promo-dialog"|class="member-card"|class="news-card"/);
+});
+
+test("keeps the TP.HCM member banner off the Quy Nhơn member hero", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.app-shell:not\(\.campus-quy-nhon\) \.valorant-members \.members-hero::before\s*\{[^}]*faerie-banner\.jpg/s);
+  assert.match(css, /\.campus-quy-nhon \.valorant-members \.members-hero\s*\{[^}]*radial-gradient/s);
 });
 
 test("keeps optimized event photos available to the published site", async () => {
