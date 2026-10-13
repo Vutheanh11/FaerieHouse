@@ -694,9 +694,10 @@ export default function Home() {
           <button type="button" className={navSection === "members" ? "active" : ""} aria-current={navSection === "members" ? "page" : undefined} onClick={() => switchTab("members")}>Members</button>
           <button type="button" className={navSection === "stories" ? "active" : ""} aria-current={navSection === "stories" ? "page" : undefined} onClick={() => switchTab("Introduce", "stories")}>Stories</button>
           <button type="button" className={navSection === "news" ? "active" : ""} aria-current={navSection === "news" ? "page" : undefined} onClick={() => switchTab("news")}>News</button>
+          <a className="campus-mobile-link" href="./quy-nhon/">Faerie Quy Nhơn 2026 <span aria-hidden="true">↗</span></a>
         </nav>
 
-        <div className="header-note">EST. 2024 · TP.HCM</div>
+        <a className="header-note campus-switch" href="./quy-nhon/" aria-label="Đến trang Faerie Quy Nhơn 2026" title="Đến Faerie Quy Nhơn 2026">EST. 2024 · TP.HCM <span aria-hidden="true">↗</span></a>
       </header>
 
       {selectedStoryKey ? (

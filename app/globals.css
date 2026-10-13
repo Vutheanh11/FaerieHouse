@@ -104,6 +104,30 @@ a { color: inherit; }
 .main-nav button.active { background: var(--ink); color: white; box-shadow: 0 5px 18px rgba(15,45,35,.16); }
 .main-nav button:hover:not(.active) { background: rgba(23,58,45,.07); }
 .header-note { justify-self: end; font-size: 9px; font-weight: 700; letter-spacing: .16em; }
+.campus-switch { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; text-decoration: none; transition: color .2s ease; }
+.campus-switch:hover { color: #c8f76b; }
+.campus-switch:focus-visible, .campus-mobile-link:focus-visible { outline: 3px solid #c8f76b; outline-offset: 3px; }
+.campus-switch span { font-size: 15px; }
+.campus-mobile-link { display: none; }
+
+.quy-nhon-page { min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; background: #102017; color: #f6f3eb; }
+.quy-nhon-header { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 max(5vw, 24px); border-bottom: 1px solid rgba(246,243,235,.22); font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+.quy-nhon-brand { font-size: 17px; text-decoration: none; }
+.quy-nhon-brand span { color: #b9d5ad; }
+.quy-nhon-content { width: min(100%, 1500px); flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; margin: 0 auto; padding: clamp(64px, 9vw, 140px) max(5vw, 24px); }
+.quy-nhon-kicker { margin: 0 0 26px; color: #b9d5ad; font-size: 11px; font-weight: 900; letter-spacing: .2em; }
+.quy-nhon-content h1 { margin: 0; font: italic 900 clamp(54px, 10vw, 160px)/.97 var(--font-sans); letter-spacing: -.08em; }
+.quy-nhon-content h1 em { color: #b9d5ad; font-style: inherit; }
+.quy-nhon-description { max-width: 550px; margin: 30px 0 0; color: #c4d0c4; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; }
+.quy-nhon-back { display: inline-flex; align-items: center; min-height: 48px; margin-top: 36px; padding: 12px 18px; border: 1px solid #b9d5ad; color: #b9d5ad; font-size: 13px; font-weight: 800; text-decoration: none; transition: background .2s ease, color .2s ease; }
+.quy-nhon-back:hover { background: #b9d5ad; color: #102017; }
+.quy-nhon-back:focus-visible, .quy-nhon-brand:focus-visible { outline: 3px solid #c8f76b; outline-offset: 3px; }
+.quy-nhon-footer { padding: 20px max(5vw, 24px); border-top: 1px solid rgba(246,243,235,.22); color: #b9d5ad; font-size: 10px; font-weight: 800; letter-spacing: .18em; }
+@media (max-width: 760px) {
+  .quy-nhon-header { min-height: 72px; }
+  .quy-nhon-header > span { font-size: 9px; text-align: right; }
+  .quy-nhon-content h1 { font-size: clamp(45px, 12vw, 90px); }
+}
 
 .section-shell { padding-left: max(5vw, 24px); padding-right: max(5vw, 24px); }
 .hero {
@@ -2125,6 +2149,7 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
   .site-header.is-tactical .main-nav { display: none; position: absolute; top: 100%; right: 0; left: 0; z-index: 40; padding: 10px 16px 16px; border: 0; border-radius: 0; background: #102017; box-shadow: 0 18px 25px rgba(0,0,0,.3); }
   .site-header.is-tactical .main-nav.is-open { display: grid; grid-template-columns: 1fr; gap: 3px; }
   .site-header.is-tactical .main-nav button { justify-content: flex-start; width: 100%; min-height: 43px; padding: 11px 14px; font-size: 14px; text-align: left; }
+  .site-header.is-tactical .main-nav .campus-mobile-link { display: flex; align-items: center; justify-content: space-between; min-height: 43px; margin-top: 8px; padding: 11px 14px; border-top: 1px solid rgba(244,241,232,.22); color: #b9d5ad; font-size: 14px; font-weight: 800; text-decoration: none; }
   #about, #events { scroll-margin-top: 76px; }
 }
 

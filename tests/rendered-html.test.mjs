@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { access } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(path = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
+    new Request(`http://localhost${path}`, {
       headers: { accept: "text/html" },
     }),
     {
@@ -32,6 +32,8 @@ test("renders the Faerie website and its current navigation", async () => {
   assert.match(html, /<html lang="vi">/);
   assert.match(html, /<title>Faerie House [-—] One House\. Many Stories\.<\/title>/);
   assert.match(html, /id="site-main-nav"/);
+  assert.match(html, /class="header-note campus-switch" href="\.\/quy-nhon\/"/);
+  assert.match(html, /Faerie Quy Nhơn 2026/);
   for (const label of ["Home", "About", "Members", "Stories", "News"]) {
     assert.match(html, new RegExp(`>${label}<\\/button>`));
   }
@@ -52,6 +54,16 @@ test("renders the Faerie website and its current navigation", async () => {
   assert.match(html, /Made by Vu The Anh ↗<\/a>/);
   assert.match(html, /https:\/\/www\.facebook\.com\/vu\.bootloop/);
   assert.doesNotMatch(html, /site-watermark-overlay|faerie-credit-watermark/);
+});
+
+test("renders an empty Quy Nhơn 2026 page with a return link", async () => {
+  const response = await render("/quy-nhon");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /FAERIE \/ QUY NHƠN \/ 2026/);
+  assert.match(html, /Hình ảnh và thông tin thành viên sẽ được bổ sung sau/);
+  assert.match(html, /Về Faerie TP\.HCM/);
+  assert.doesNotMatch(html, /TeamBuilding_1|member-profile-card|member-roster/);
 });
 
 test("keeps optimized event photos available to the published site", async () => {
