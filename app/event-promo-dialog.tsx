@@ -34,11 +34,13 @@ export default function EventPromoDialog({
   settings,
   onRead,
   onDismiss,
+  readLabel = "Xem sự kiện",
 }: {
   event: PromoEvent;
   settings?: PromoSettings | null;
   onRead: () => void;
   onDismiss: () => void;
+  readLabel?: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [secondsLeft, setSecondsLeft] = useState(3);
@@ -101,7 +103,7 @@ export default function EventPromoDialog({
             {facebook ? (
               <a href={facebook} target="_blank" rel="noopener noreferrer">Xem sự kiện trên Facebook <span aria-hidden="true">↗</span></a>
             ) : (
-              <button type="button" onClick={onRead}>Xem sự kiện <span aria-hidden="true">↗</span></button>
+              <button type="button" onClick={onRead}>{readLabel} <span aria-hidden="true">↗</span></button>
             )}
           </div>
         </div>

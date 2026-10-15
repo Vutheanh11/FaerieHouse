@@ -495,7 +495,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   const [promoVisible, setPromoVisible] = useState(true);
   const [promoReady, setPromoReady] = useState(false);
   const [promoSettings, setPromoSettings] = useState<PromoSettings | null>(null);
-  const [newsLoading, setNewsLoading] = useState(!isQuyNhon);
+  const [newsLoading, setNewsLoading] = useState(true);
   const [newsError, setNewsError] = useState(false);
   const [role, setRole] = useState<MemberGroup | "All">("All");
   const [query, setQuery] = useState("");
@@ -503,6 +503,8 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   const [selectedMember, setSelectedMember] = useState<MemberProfile | null>(null);
   const closeMemberProfile = useCallback(() => setSelectedMember(null), []);
   const totalMembers = currentMembers.length;
+  const hasQuyNhonContent = totalMembers > 0 || newsItems.length > 0;
+  const quyNhonFeatureImage = isQuyNhon ? newsItems.flatMap((item) => item.images ?? []).find(Boolean) : undefined;
   const archiveYears = useMemo(() => [...new Set(newsItems.map((story) => story.year))].sort((first, second) => Number(second) - Number(first)), [newsItems]);
   const availableArchiveYears = archiveYears.length ? archiveYears : isQuyNhon ? ["2026"] : [];
   const selectedArchiveYear = archiveYears.includes(archiveYear) ? archiveYear : archiveYears[0] || "2026";
@@ -572,13 +574,12 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   }, [isQuyNhon]);
 
   useEffect(() => {
-    if (isQuyNhon) return;
     const controller = new AbortController();
     let mounted = true;
     const timeout = window.setTimeout(() => controller.abort(), 90_000);
 
     const loadMembers = async () => {
-      const response = await fetch(`${apiBaseUrl}/api/v1/members?year=2026`, { signal: controller.signal });
+      const response = await fetch(`${apiBaseUrl}/api/v1/members?year=2026&campus=${campus}`, { signal: controller.signal });
       if (!response.ok) return;
       const data: { members?: MemberProfile[] } = await response.json();
       if (Array.isArray(data.members) && data.members.every((person) =>
@@ -590,7 +591,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
 
     const loadNews = async () => {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/v1/news`, { signal: controller.signal });
+        const response = await fetch(`${apiBaseUrl}/api/v1/news?campus=${campus}`, { signal: controller.signal });
         if (!response.ok) throw new Error("News API unavailable");
         const data: { news?: FaerieEvent[] } = await response.json();
         if (Array.isArray(data.news) && data.news.every((item) =>
@@ -608,7 +609,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
 
     const loadPopup = async () => {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/v1/popup`, { signal: controller.signal });
+        const response = await fetch(`${apiBaseUrl}/api/v1/popup?campus=${campus}`, { signal: controller.signal });
         if (!response.ok) return;
         const data: { popup?: PromoSettings } = await response.json();
         const popup = data.popup;
@@ -626,7 +627,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       controller.abort();
       window.clearTimeout(timeout);
     };
-  }, [isQuyNhon]);
+  }, [campus]);
 
   useEffect(() => {
     const closeMenuOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setMenuOpen(false); };
@@ -692,7 +693,9 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   );
 
   const selectedStory = newsItems.find((story) => newsStoryKey(story) === selectedStoryKey);
-  const promoEvent = newsItems.find((story) => !story.id && story.images?.length) ?? events2026[events2026.length - 1];
+  const promoEvent = isQuyNhon
+    ? newsItems[0] ?? { date: "01.01", year: "2026", title: "Faerie Quy Nhơn", description: "Những câu chuyện mới của nhà sẽ sớm xuất hiện.", tag: "FAERIE", location: "Quy Nhơn", tone: "mint", images: [] }
+    : newsItems.find((story) => !story.id && story.images?.length) ?? events2026[events2026.length - 1];
 
   const closeStory = () => {
     const url = new URL(window.location.href);
@@ -788,7 +791,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
               <div className="v-hero-bottom">
                 <p>
                   {isQuyNhon
-                    ? "Chào mừng đến với Faerie Quy Nhơn 2026. Không gian dành cho thành viên, hoạt động và những câu chuyện của nhà đã sẵn sàng; nội dung sẽ được cập nhật khi có thông tin chính thức."
+                    ? hasQuyNhonContent ? "Chào mừng đến với Faerie Quy Nhơn 2026. Khám phá thành viên, hoạt động và những câu chuyện mới của nhà." : "Chào mừng đến với Faerie Quy Nhơn 2026. Không gian dành cho thành viên, hoạt động và những câu chuyện của nhà đã sẵn sàng; nội dung sẽ được cập nhật khi có thông tin chính thức."
                     : "Faerie là một mảnh ghép của dự án Brothers & Sisters tại Đại học FPT TP.HCM, nơi các anh chị đồng hành, kết nối và hỗ trợ tân sinh viên. Tại đây, bạn có thể tìm hiểu thành viên của nhà, xem các hoạt động nổi bật và đọc những câu chuyện của Faerie."}
                 </p>
                 <div className="v-actions">
@@ -822,7 +825,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
               </div>
               <p>
                 {isQuyNhon
-                  ? "Hành trình Faerie Quy Nhơn 2026 sẽ được lưu lại ở đây khi những hoạt động đầu tiên được công bố."
+                  ? newsItems.length ? "Những câu chuyện và hoạt động mới nhất của Faerie Quy Nhơn 2026 được lưu lại tại đây." : "Hành trình Faerie Quy Nhơn 2026 sẽ được lưu lại ở đây khi những hoạt động đầu tiên được công bố."
                   : "Mỗi câu chuyện là một tọa độ trong hành trình chung - nơi chúng mình gặp gỡ, thử sức và biến những ngày bình thường thành ký ức đáng nhớ."}
               </p>
             </div>
@@ -876,14 +879,14 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
               <h2>KHÔNG CHỈ<br />LÀ NGƯỜI<br /><em>DẪN ĐƯỜNG.</em></h2>
               <p className="v-about-lead">
                 {isQuyNhon
-                  ? "Brothers & Sisters (Brosis) là những sinh viên đi trước đồng hành với tân sinh viên. Faerie Quy Nhơn 2026 sẽ giới thiệu đội ngũ và hành trình của mình tại đây khi thông tin được cập nhật."
+                  ? totalMembers ? "Brothers & Sisters (Brosis) là những sinh viên đi trước đồng hành với tân sinh viên. Gặp đội ngũ Faerie Quy Nhơn 2026 và khám phá hành trình của nhà tại đây." : "Brothers & Sisters (Brosis) là những sinh viên đi trước đồng hành với tân sinh viên. Faerie Quy Nhơn 2026 sẽ giới thiệu đội ngũ và hành trình của mình tại đây khi thông tin được cập nhật."
                   : "Brothers & Sisters (Brosis) là những sinh viên đi trước hỗ trợ tân sinh viên trong những ngày đầu tại Đại học FPT TP.HCM. Faerie là một nhà Brosis trong cộng đồng ấy: cùng giải đáp, tham gia hoạt động, học hỏi và xây dựng những kết nối lâu dài."}
               </p>
             </div>
 
             <div className="v-about-visual" aria-label={isQuyNhon ? "Chỗ dành cho hình ảnh Faerie Quy Nhơn" : "Khoảnh khắc của các thành viên Faerie"} data-reveal>
               {isQuyNhon ? (
-                <div className="v-photo-main campus-photo-placeholder"><span>FAERIE<br />QUY NHƠN</span><small>HÌNH ẢNH SẼ ĐƯỢC CẬP NHẬT</small></div>
+                quyNhonFeatureImage ? <figure className="v-photo-main"><img src={quyNhonFeatureImage} alt="Khoảnh khắc Faerie Quy Nhơn" loading="lazy" decoding="async" /><figcaption>FAERIE QUY NHƠN // 2026</figcaption></figure> : <div className="v-photo-main campus-photo-placeholder"><span>FAERIE<br />QUY NHƠN</span><small>HÌNH ẢNH SẼ ĐƯỢC CẬP NHẬT</small></div>
               ) : (
                 <figure className="v-photo-main">
                   <img src="images/events/2026/offline/HopOffline_3.webp" alt="Thành viên Faerie cùng trò chuyện và vỗ tay trong buổi họp offline" loading="lazy" decoding="async" />
@@ -948,10 +951,10 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
             <div className="members-intro" data-reveal>
               <p>
                 {isQuyNhon
-                  ? "Đây sẽ là nơi giới thiệu các thành viên của Faerie Quy Nhơn 2026. Danh sách hiện chưa được cập nhật."
+                  ? totalMembers ? "Gặp những thành viên đang tạo nên câu chuyện Faerie Quy Nhơn 2026." : "Đây sẽ là nơi giới thiệu các thành viên của Faerie Quy Nhơn 2026. Danh sách hiện chưa được cập nhật."
                   : "Mỗi thành viên là một màu sắc riêng, cùng góp lại thành câu chuyện Faerie 2026. Tìm những gương mặt đang đồng hành với ngôi nhà trong năm nay."}
               </p>
-              <div className="members-stat"><strong>{totalMembers}</strong><span>{isQuyNhon ? <>thành viên<br />đang cập nhật</> : <>members<br />&amp; growing</>}</span></div>
+              <div className="members-stat"><strong>{totalMembers}</strong><span>{isQuyNhon && !totalMembers ? <>thành viên<br />đang cập nhật</> : <>members<br />&amp; growing</>}</span></div>
               <button className="members-top-link" type="button" onClick={() => switchTab("top20")}>Khám phá Top 20 <span aria-hidden="true">↗</span></button>
             </div>
 
@@ -963,7 +966,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                 <p className="tactical-kicker"><span>02</span> Select your roster</p>
                 <h2>CHOOSE YOUR<br /><em>CREW.</em></h2>
               </div>
-              <p>{isQuyNhon ? "Danh sách Faerie Quy Nhơn 2026 sẽ được cập nhật tại đây." : "Tìm kiếm từng gương mặt, vai trò và câu chuyện của các thành viên Faerie 2026."}</p>
+              <p>{isQuyNhon && !totalMembers ? "Danh sách Faerie Quy Nhơn 2026 sẽ được cập nhật tại đây." : "Tìm kiếm từng gương mặt, vai trò và câu chuyện của các thành viên Faerie 2026."}</p>
             </div>
 
             <div className="directory-toolbar" data-reveal>
@@ -1024,10 +1027,10 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                     >
                       <div className="member-card-surface">
                         <div
-                          className={`avatar ${person.photo || memberPhoto(year, person.name) ? "has-photo" : avatarTones[person.index % avatarTones.length]}`}
-                          style={memberGlitchStyle(person.photo || memberPhoto(year, person.name))}
+                          className={`avatar ${person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? "has-photo" : avatarTones[person.index % avatarTones.length]}`}
+                          style={memberGlitchStyle(person.photo || (isQuyNhon ? "" : memberPhoto(year, person.name)))}
                         >
-                          {person.photo || memberPhoto(year, person.name) ? (
+                          {person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? (
                             <img src={person.photo || memberPhoto(year, person.name)} alt={`Ảnh của ${person.name}`} loading="lazy" />
                           ) : (
                             <span>{initials(person.name)}</span>
@@ -1059,7 +1062,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
             <h1>FAERIE<br /><em>NEWS.</em></h1>
             <p>{isQuyNhon ? "Bài viết và hoạt động của Faerie Quy Nhơn 2026 sẽ được đăng tại đây." : "Những hoạt động gần đây của nhà Faerie, từ khoảnh khắc mới nhất trở về ngày đầu tiên."}</p>
             <span className="news-total">{newsItems.length.toString().padStart(2, "0")} CÂU CHUYỆN</span>
-            <p className="news-sync-status" role="status" aria-live="polite">{isQuyNhon ? "Chưa có bài đăng." : newsLoading ? "Đang đồng bộ tin mới từ Faerie…" : newsError ? "Tin mới tạm thời chưa kết nối; đang hiển thị các hoạt động có sẵn." : "Tin tức đã được cập nhật."}</p>
+            <p className="news-sync-status" role="status" aria-live="polite">{newsLoading ? "Đang đồng bộ tin mới từ Faerie…" : newsError ? "Tin mới tạm thời chưa kết nối; đang hiển thị các hoạt động có sẵn." : isQuyNhon && !newsItems.length ? "Chưa có bài đăng." : "Tin tức đã được cập nhật."}</p>
           </section>
           <section className="news-feed section-shell" aria-label="Tin tức Faerie">
             {newsItems.map((event) => (
@@ -1143,20 +1146,22 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       {selectedMember && (
         <MemberProfileDialog
           member={selectedMember}
-          photo={selectedMember.photo || memberPhoto(year, selectedMember.name)}
+          photo={selectedMember.photo || (isQuyNhon ? "" : memberPhoto(year, selectedMember.name))}
           year={year}
           onDismiss={closeMemberProfile}
         />
       )}
 
-      {!isQuyNhon && promoReady && promoVisible && promoSettings?.enabled !== false && (
+      {promoReady && promoVisible && (isQuyNhon ? promoSettings?.enabled === true : promoSettings?.enabled !== false) && (
         <EventPromoDialog
           event={promoEvent}
           settings={promoSettings}
+          readLabel={isQuyNhon && !newsItems.length ? "Xem News" : "Xem sự kiện"}
           onDismiss={() => setPromoVisible(false)}
           onRead={() => {
             setPromoVisible(false);
-            openStory(promoEvent);
+            if (isQuyNhon && !newsItems.length) switchTab("news");
+            else openStory(promoEvent);
           }}
         />
       )}
