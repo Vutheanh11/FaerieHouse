@@ -32,14 +32,16 @@ test("renders the Faerie website and its current navigation", async () => {
   assert.match(html, /<html lang="vi">/);
   assert.match(html, /<title>Faerie House [-—] One House\. Many Stories\.<\/title>/);
   assert.match(html, /id="site-main-nav"/);
-  assert.match(html, /class="header-note campus-switch" href="\.\/quy-nhon\/"/);
-  assert.match(html, /Faerie Quy Nhơn 2026/);
+  assert.match(html, /href="\.\/\?campus=hcm" aria-current="page"[^>]*>Campus HCM<\/a>/);
+  assert.match(html, /href="\.\/quy-nhon\/"[^>]*>Campus Quy Nhơn<\/a>/);
+  assert.match(html, /class="campus-selector campus-selector-mobile"/);
   for (const label of ["Home", "About", "Members", "Stories", "News"]) {
     assert.match(html, new RegExp(`>${label}<\\/button>`));
   }
   assert.doesNotMatch(html, /Introduce <span>02<\/span>|Members <span>34<\/span>|News <span>07<\/span>/);
   assert.match(html, /<h2 class="v-story-title">FAERIE<br\/><em>STORY (?:<!-- -->)?2026<\/em><\/h2>/);
   assert.match(html, /JOURNEY \/ ARCHIVE/);
+  assert.match(html, /v-event-october-overlay/);
   assert.match(html, /id="new-students"/);
   assert.doesNotMatch(html, /class="event-promo-dialog"/);
   assert.match(html, /HỎI NHANH \/ FAQ/);
@@ -65,8 +67,8 @@ test("renders the full Quy Nhơn shell with empty members, stories and news", as
   for (const label of ["Home", "About", "Members", "Stories", "News"]) {
     assert.match(html, new RegExp(`>${label}<\\/button>`));
   }
-  assert.match(html, /FAERIE 2026 · QUY NHƠN/);
-  assert.match(html, /href="\.\.\/\?campus=hcm"/);
+  assert.match(html, /href="\.\.\/\?campus=hcm"[^>]*>Campus HCM<\/a>/);
+  assert.match(html, /href="\.\/" aria-current="page"[^>]*>Campus Quy Nhơn<\/a>/);
   assert.match(html, /CHƯA CÓ CÂU CHUYỆN/);
   assert.match(html, /THÀNH VIÊN<\/small><strong>0<\/strong>/);
   assert.match(html, /\.\.\/images\/faerie-icon\.png/);
@@ -81,8 +83,11 @@ test("keeps the TP.HCM member banner off the Quy Nhơn member hero", async () =>
 });
 
 test("keeps optimized event photos available to the published site", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /v-event-october-overlay[^}]*20-10-celebration\.svg/);
   await Promise.all([
     access(new URL("../public/images/events/2026/team-building/TeamBuilding_1.webp", import.meta.url)),
     access(new URL("../public/images/events/2026/offline/HopOffline_3.webp", import.meta.url)),
+    access(new URL("../public/images/20-10-celebration.svg", import.meta.url)),
   ]);
 });

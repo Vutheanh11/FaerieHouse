@@ -481,8 +481,8 @@ const avatarTones = ["sage", "sun", "sky", "lilac", "coral", "lime"];
 
 export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }) {
   const isQuyNhon = campus === "quy-nhon";
-  const campusHref = isQuyNhon ? "../?campus=hcm" : "./quy-nhon/";
-  const campusDestination = isQuyNhon ? "TP.HCM" : "Quy Nhơn 2026";
+  const hcmCampusHref = isQuyNhon ? "../?campus=hcm" : "./?campus=hcm";
+  const quyNhonCampusHref = isQuyNhon ? "./" : "./quy-nhon/";
   const logoSrc = `${isQuyNhon ? "../" : ""}images/faerie-icon.png`;
   const [tab, setTab] = useState<Tab>("Introduce");
   const [navSection, setNavSection] = useState<NavSection>("home");
@@ -492,6 +492,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   const [newsItems, setNewsItems] = useState<FaerieEvent[]>(isQuyNhon ? [] : [...events2026].reverse());
   const [archiveYear, setArchiveYear] = useState("2026");
   const [selectedStoryKey, setSelectedStoryKey] = useState<string | null>(null);
+  const storyScrollPosition = useRef<number | null>(null);
   const [promoVisible, setPromoVisible] = useState(true);
   const [promoReady, setPromoReady] = useState(false);
   const [promoSettings, setPromoSettings] = useState<PromoSettings | null>(null);
@@ -518,6 +519,13 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       const storyKey = new URL(window.location.href).searchParams.get("story");
       setSelectedStoryKey(storyKey);
       if (storyKey) { setTab("news"); setNavSection("news"); }
+      else if (storyScrollPosition.current !== null) {
+        const scrollPosition = storyScrollPosition.current;
+        window.requestAnimationFrame(() => {
+          window.scrollTo(0, scrollPosition);
+          storyScrollPosition.current = null;
+        });
+      }
     };
     syncStoryFromUrl();
     window.addEventListener("popstate", syncStoryFromUrl);
@@ -702,8 +710,13 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
     url.searchParams.delete("story");
     window.history.replaceState(null, "", url);
     setSelectedStoryKey(null);
-    if (tab === "Introduce") window.requestAnimationFrame(() => document.getElementById("events")?.scrollIntoView({ behavior: "smooth" }));
-    else window.scrollTo({ top: 0, behavior: "smooth" });
+    const scrollPosition = storyScrollPosition.current;
+    if (scrollPosition !== null) {
+      window.requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPosition);
+        storyScrollPosition.current = null;
+      });
+    }
   };
 
   const openStory = (story: FaerieEvent) => {
@@ -711,8 +724,9 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
     const url = new URL(window.location.href);
     url.searchParams.set("story", key);
     window.history.pushState(null, "", url);
+    storyScrollPosition.current = window.scrollY;
     setSelectedStoryKey(key);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo(0, 0);
   };
 
   const switchTab = (nextTab: Tab, section?: "home" | "about" | "stories") => {
@@ -721,6 +735,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       url.searchParams.delete("story");
       window.history.replaceState(null, "", url);
       setSelectedStoryKey(null);
+      storyScrollPosition.current = null;
     }
     setTab(nextTab);
     setMenuOpen(false);
@@ -732,8 +747,8 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
     }
   };
 
-  const rememberCampusChoice = () => {
-    try { window.sessionStorage.setItem(MANUAL_CAMPUS_KEY, isQuyNhon ? "hcm" : "quy-nhon"); }
+  const rememberCampusChoice = (selectedCampus: "hcm" | "quy-nhon") => {
+    try { window.sessionStorage.setItem(MANUAL_CAMPUS_KEY, selectedCampus); }
     catch { /* The explicit HCM link also has a URL fallback. */ }
   };
 
@@ -758,10 +773,16 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
           <button type="button" className={navSection === "members" ? "active" : ""} aria-current={navSection === "members" ? "page" : undefined} onClick={() => switchTab("members")}>Members</button>
           <button type="button" className={navSection === "stories" ? "active" : ""} aria-current={navSection === "stories" ? "page" : undefined} onClick={() => switchTab("Introduce", "stories")}>Stories</button>
           <button type="button" className={navSection === "news" ? "active" : ""} aria-current={navSection === "news" ? "page" : undefined} onClick={() => switchTab("news")}>News</button>
-          <a className="campus-mobile-link" href={campusHref} onClick={rememberCampusChoice}>Faerie {campusDestination} <span aria-hidden="true">↗</span></a>
+          <div className="campus-selector campus-selector-mobile" role="group" aria-label="Chọn campus">
+            <a className={`campus-option${!isQuyNhon ? " active" : ""}`} href={hcmCampusHref} aria-current={!isQuyNhon ? "page" : undefined} onClick={() => rememberCampusChoice("hcm")}>Campus HCM</a>
+            <a className={`campus-option${isQuyNhon ? " active" : ""}`} href={quyNhonCampusHref} aria-current={isQuyNhon ? "page" : undefined} onClick={() => rememberCampusChoice("quy-nhon")}>Campus Quy Nhơn</a>
+          </div>
         </nav>
 
-        <a className="header-note campus-switch" href={campusHref} onClick={rememberCampusChoice} aria-label={`Đến trang Faerie ${campusDestination}`} title={`Đến Faerie ${campusDestination}`}>{isQuyNhon ? "FAERIE 2026 · QUY NHƠN" : "EST. 2024 · TP.HCM"} <span aria-hidden="true">↗</span></a>
+        <div className="campus-selector campus-selector-desktop" role="group" aria-label="Chọn campus">
+          <a className={`campus-option${!isQuyNhon ? " active" : ""}`} href={hcmCampusHref} aria-current={!isQuyNhon ? "page" : undefined} onClick={() => rememberCampusChoice("hcm")}>Campus HCM</a>
+          <a className={`campus-option${isQuyNhon ? " active" : ""}`} href={quyNhonCampusHref} aria-current={isQuyNhon ? "page" : undefined} onClick={() => rememberCampusChoice("quy-nhon")}>Campus Quy Nhơn</a>
+        </div>
       </header>
 
       {selectedStoryKey ? (
@@ -853,6 +874,9 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                       ) : (
                         <div className="v-event-symbol" aria-hidden="true">{index === 0 ? "✦" : "∞"}</div>
                       )}
+                      <div className="v-event-october-overlay" aria-hidden="true">
+                        <span>20.10 // GỬI LỜI TRI ÂN</span>
+                      </div>
                       <span className="v-event-number">{"// 0"}{index + 1}</span>
                       <span className="v-event-tag">{event.tag}</span>
                       <span className="v-corner" aria-hidden="true" />
