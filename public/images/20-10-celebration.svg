@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <linearGradient id="background" x1="116" y1="62" x2="1080" y2="756" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4B2537"/>
+      <stop offset="1" stop-color="#172B21"/>
+    </linearGradient>
+    <linearGradient id="dress" x1="350" y1="386" x2="491" y2="715" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7A8B8"/>
+      <stop offset="1" stop-color="#A94E71"/>
+    </linearGradient>
+    <linearGradient id="jacket" x1="536" y1="384" x2="679" y2="712" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9D5AD"/>
+      <stop offset="1" stop-color="#527757"/>
+    </linearGradient>
+    <linearGradient id="coat" x1="710" y1="389" x2="853" y2="718" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4C49B"/>
+      <stop offset="1" stop-color="#A7794F"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#background)" d="M0 0h1200v800H0z"/>
+  <circle cx="954" cy="179" r="171" fill="#F4C2CC" fill-opacity=".08"/>
+  <circle cx="954" cy="179" r="126" stroke="#F4C2CC" stroke-opacity=".26"/>
+  <path d="M0 635c178-66 320-74 472-36 173 43 365 47 728-48v249H0V635Z" fill="#122319"/>
+  <g stroke="#F3D0D5" stroke-opacity=".45">
+    <path d="M81 114v52m-26-26h52m203-91v42m-21-21h42m665 449v42m-21-21h42"/>
+    <circle cx="252" cy="210" r="4" fill="#F3D0D5"/>
+    <circle cx="1082" cy="372" r="4" fill="#F3D0D5"/>
+    <circle cx="151" cy="472" r="3" fill="#F3D0D5"/>
+  </g>
+  <text x="600" y="269" fill="#F8DCE1" font-family="Arial,sans-serif" font-size="142" font-weight="800" letter-spacing="-8" text-anchor="middle">20.10</text>
+  <text x="600" y="314" fill="#E8C6CB" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="8" text-anchor="middle">GỬI LỜI TRI ÂN</text>
+  <g>
+    <path d="M297 723c12-116 17-206 28-276 7-45 36-70 91-70s84 25 91 70c11 70 16 160 28 276H297Z" fill="url(#dress)"/>
+    <path d="M369 370c-10-48 8-85 48-85 41 0 58 37 48 85l-13 42h-70l-13-42Z" fill="#E9B89F"/>
+    <path d="M356 369c-1-63 20-101 62-101 41 0 64 38 62 101-21-8-39-23-53-43-14 22-37 38-71 43Z" fill="#36222A"/>
+    <path d="M483 494c40 7 78 25 109 55l-24 30-103-42" fill="#E9B89F"/>
+    <path d="m547 547 73-7 7 24-75 19" fill="#E9B89F"/>
+  </g>
+  <g>
+    <path d="M477 723c12-116 17-206 28-276 7-45 36-70 91-70s84 25 91 70c11 70 16 160 28 276H477Z" fill="url(#jacket)"/>
+    <path d="M549 370c-10-48 8-85 48-85 41 0 58 37 48 85l-13 42h-70l-13-42Z" fill="#D5A17F"/>
+    <path d="M536 369c-1-63 20-101 62-101 41 0 64 38 62 101-21-8-39-23-53-43-14 22-37 38-71 43Z" fill="#30242B"/>
+    <path d="M663 494c38 11 65 31 91 62l-27 25-84-53" fill="#D5A17F"/>
+    <path d="m727 550 66 1 1 24-67 11" fill="#D5A17F"/>
+  </g>
+  <g>
+    <path d="M657 723c12-116 17-206 28-276 7-45 36-70 91-70s84 25 91 70c11 70 16 160 28 276H657Z" fill="url(#coat)"/>
+    <path d="M729 370c-10-48 8-85 48-85 41 0 58 37 48 85l-13 42h-70l-13-42Z" fill="#E8BD99"/>
+    <path d="M716 369c-1-63 20-101 62-101 41 0 64 38 62 101-21-8-39-23-53-43-14 22-37 38-71 43Z" fill="#55362C"/>
+    <path d="M843 494c34 17 57 39 74 72l-31 19-68-65" fill="#E8BD99"/>
+    <path d="m906 558 58 16-6 24-62-7" fill="#E8BD99"/>
+  </g>
+  <g stroke="#F1C8D1" stroke-linecap="round" stroke-width="5">
+    <path d="m966 597 31 105m-23-104 22 105m-5-105 14 104"/>
+  </g>
+  <g fill="#F3A9BC">
+    <circle cx="962" cy="578" r="13"/><circle cx="976" cy="571" r="13"/><circle cx="989" cy="580" r="13"/><circle cx="982" cy="594" r="13"/><circle cx="967" cy="593" r="13"/>
+    <circle cx="999" cy="565" r="10"/><circle cx="1009" cy="558" r="10"/><circle cx="1018" cy="566" r="10"/><circle cx="1011" cy="577" r="10"/><circle cx="1000" cy="576" r="10"/>
+  </g>
+  <g fill="#F4D58C">
+    <circle cx="976" cy="583" r="5"/><circle cx="1010" cy="567" r="4"/>
+  </g>
+  <path d="M93 749h1014" stroke="#F3D0D5" stroke-opacity=".4"/>
+  <text x="600" y="779" fill="#D7C6C5" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="5" text-anchor="middle">FAERIE // CELEBRATING WOMEN</text>
+</svg>
