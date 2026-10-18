@@ -625,7 +625,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
             [popup.title, popup.description, popup.image, popup.facebookUrl].every((value) => typeof value === "string")) {
           setPromoSettings(popup);
         }
-      } catch { /* Keep the most recent built-in event if the API is unavailable. */ }
+      } catch { /* Leave the promotion off when the API is unavailable. */ }
       finally { if (mounted) setPromoReady(true); }
     };
 
@@ -701,9 +701,13 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   );
 
   const selectedStory = newsItems.find((story) => newsStoryKey(story) === selectedStoryKey);
-  const promoEvent = isQuyNhon
-    ? newsItems[0] ?? { date: "01.01", year: "2026", title: "Faerie Quy Nhơn", description: "Những câu chuyện mới của nhà sẽ sớm xuất hiện.", tag: "FAERIE", location: "Quy Nhơn", tone: "mint", images: [] }
-    : newsItems.find((story) => !story.id && story.images?.length) ?? events2026[events2026.length - 1];
+  const promoStory = promoSettings?.enabled
+    ? newsItems.find((story) => story.title.trim() === promoSettings.title.trim())
+    : undefined;
+  const promoEvent = promoStory ?? {
+    date: "", year: "2026", title: "Sự kiện Faerie", description: "",
+    tag: "FAERIE", location: isQuyNhon ? "Quy Nhơn" : "TP.HCM", tone: "mint", images: [],
+  };
 
   const closeStory = () => {
     const url = new URL(window.location.href);
@@ -1176,16 +1180,16 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
         />
       )}
 
-      {promoReady && promoVisible && (isQuyNhon ? promoSettings?.enabled === true : promoSettings?.enabled !== false) && (
+      {promoReady && promoVisible && promoSettings?.enabled === true && (
         <EventPromoDialog
           event={promoEvent}
           settings={promoSettings}
-          readLabel={isQuyNhon && !newsItems.length ? "Xem News" : "Xem sự kiện"}
+          readLabel={promoStory ? "Xem sự kiện" : "Xem News"}
           onDismiss={() => setPromoVisible(false)}
           onRead={() => {
             setPromoVisible(false);
-            if (isQuyNhon && !newsItems.length) switchTab("news");
-            else openStory(promoEvent);
+            if (promoStory) openStory(promoStory);
+            else switchTab("news");
           }}
         />
       )}
