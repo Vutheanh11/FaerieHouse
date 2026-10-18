@@ -836,7 +836,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
 
           <section className="v-signal" id="mission" aria-label="Những con số của Faerie">
             <div className="v-signal-lead"><span aria-hidden="true"></span> ONE HOUSE. MANY STORIES.</div>
-            {isQuyNhon ? <div><small>ĐỊA ĐIỂM</small><strong>QN</strong><span>Quy Nhơn</span></div> : <div><small>THẾ HỆ</small><strong>3</strong><span>tiếp nối</span></div>}
+            {isQuyNhon ? <div><small>ĐỊA ĐIỂM</small><strong>QN</strong><span>Quy Nhơn</span></div> : <div><small>ĐỊA ĐIỂM:</small><strong className="v-signal-location">TP. HCM</strong></div>}
             <div><small>THÀNH VIÊN</small><strong>{totalMembers}</strong><span>mảnh ghép</span></div>
             <div><small>NĂM {selectedArchiveYear}</small><strong>{archiveStories.length.toString().padStart(2, "0")}</strong><span>câu chuyện</span></div>
           </section>

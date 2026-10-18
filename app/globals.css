@@ -760,6 +760,7 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
 .v-signal-lead span { font-size: 26px; }
 .v-signal small { grid-column: 1 / -1; font-size: 12px; font-weight: 800; letter-spacing: .12em; opacity: .76; }
 .v-signal strong { grid-row: 2 / 4; font-size: clamp(38px, 4vw, 61px); font-weight: 800; line-height: 1; letter-spacing: -.08em; }
+.v-signal .v-signal-location { grid-row: 2; font-size: clamp(22px, 3vw, 42px); letter-spacing: -.045em; white-space: nowrap; }
 .v-signal div > span:not(.v-signal-lead span) { align-self: end; padding-bottom: 6px; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 
 .v-events {
@@ -2021,7 +2022,7 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
   pointer-events: none;
 }
 .news-hero > * { position: relative; }
-.news-hero h1 { margin: 18px 0 12px; font-size: clamp(68px, 10vw, 148px); font-weight: 900; font-style: italic; line-height: .94; letter-spacing: -.065em; }
+.news-hero h1 { margin: 18px 0 12px; font-size: clamp(68px, 10vw, 148px); font-weight: 900; font-style: italic; line-height: 1.06; letter-spacing: -.045em; }
 .news-hero h1 em { color: var(--t-neon); }
 .news-hero > p:not(.tactical-kicker) { max-width: 620px; margin: 0; color: rgba(246,243,235,.78); font-size: 17px; line-height: 1.7; }
 .news-total { margin-top: 26px; padding-top: 12px; border-top: 1px solid rgba(185,213,173,.55); color: var(--t-neon); font-size: 13px; font-weight: 800; letter-spacing: .13em; }
