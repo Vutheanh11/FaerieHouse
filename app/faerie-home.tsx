@@ -129,6 +129,15 @@ function memberGlitchStyle(photo?: string): CSSProperties | undefined {
   // CSS variables resolve relative URLs against the stylesheet, not the page.
   return { "--member-image": `url("${new URL(photo, document.baseURI).href}")` } as CSSProperties;
 }
+function normalizeAssetUrl(src?: string, isQuyNhon = false): string {
+  if (!src) return "";
+  // Nếu là link tuyệt đối (http://, https://) hoặc bắt đầu bằng '/', giữ nguyên:
+  if (/^https?:\/\//i.test(src) || src.startsWith("/")) {
+    return src;
+  }
+  // Chỉ nối '../' khi là đường dẫn tương đối cục bộ trên trang Quy Nhơn:
+  return isQuyNhon && !src.startsWith("..") ? `../${src}` : src;
+}
 
 function EventPhotoGallery({ images, title }: { images: string[]; title: string }) {
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -962,7 +971,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                   >
                     <div className={`v-event-media ${event.tone} ${event.images?.length ? "has-photos" : ""}`}>
                       {event.images?.length ? (
-                        <EventPhotoGallery images={event.images.map((src) => isQuyNhon && !src.startsWith("..") ? `../${src}` : src)} title={event.title} />
+                       <EventPhotoGallery images={event.images.map((src) => normalizeAssetUrl(src, isQuyNhon))} title={event.title} />
                       ) : (
                         <div className="v-event-symbol" aria-hidden="true">{index === 0 ? "✦" : "∞"}</div>
                       )}
@@ -1143,15 +1152,15 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                       onClick={() => setSelectedMember(person)}
                     >
                       <div className="member-card-surface">
-                        <div
-                          className={`avatar ${person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? "has-photo" : avatarTones[person.index % avatarTones.length]}`}
-                          style={memberGlitchStyle(person.photo || (isQuyNhon ? "" : memberPhoto(year, person.name)))}
-                        >
-                          {person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? (
-                            <img src={person.photo ? (isQuyNhon && !person.photo.startsWith("..") ? "../" + person.photo : person.photo) : memberPhoto(year, person.name)} alt={`Ảnh của ${person.name}`} loading="lazy" />
-                          ) : (
-                            <span>{initials(person.name)}</span>
-                          )}
+                       <div
+                         className={`avatar ${person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? "has-photo" : avatarTones[person.index % avatarTones.length]}`}
+                      style={memberGlitchStyle(normalizeAssetUrl(person.photo, isQuyNhon) || (isQuyNhon ? "" : memberPhoto(year, person.name)))}
+                     >
+                       {person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? (
+                      <img src={normalizeAssetUrl(person.photo, isQuyNhon) || memberPhoto(year, person.name)} alt={`Ảnh của ${person.name}`} loading="lazy" />
+                       ) : (
+                       <span>{initials(person.name)}</span>
+                        )}
                           <span className="member-card-glitch" aria-hidden="true" />
                           <small>{(person.index + 1).toString().padStart(2, "0")}</small>
                         </div>
@@ -1193,8 +1202,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                   aria-label={`Đọc bài viết ${event.title}`}>
                   <div className="news-card-image">
                     {event.images?.[0] ? (
-                      <img src={isQuyNhon && !event.images[0].startsWith("..") ? `../${event.images[0]}` : event.images[0]} alt={`Faerie — ${event.title}, ${displayDate(event.date, event.year)}`} loading="lazy" decoding="async" />
-                    ) : (
+                    <img src={normalizeAssetUrl(event.images[0], isQuyNhon)} alt={`Faerie — ${event.title}, ${displayDate(event.date, event.year)}`} loading="lazy" decoding="async" />
                       <span className="news-card-image-placeholder">FAERIE NEWS</span>
                     )}
                   </div>
@@ -1263,7 +1271,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       {selectedMember && (
         <MemberProfileDialog
           member={selectedMember}
-          photo={selectedMember.photo ? (isQuyNhon && !selectedMember.photo.startsWith("..") ? `../${selectedMember.photo}` : selectedMember.photo) : (isQuyNhon ? "" : memberPhoto(year, selectedMember.name))}
+          photo={normalizeAssetUrl(selectedMember.photo, isQuyNhon) || (isQuyNhon ? "" : memberPhoto(year, selectedMember.name))}
           year={year}
           onDismiss={closeMemberProfile}
         />
