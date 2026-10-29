@@ -58,22 +58,21 @@ test("renders the Faerie website and its current navigation", async () => {
   assert.doesNotMatch(html, /site-watermark-overlay|faerie-credit-watermark/);
 });
 
-test("renders the full Quy Nhơn shell with empty members, stories and news", async () => {
+test("renders the full Quy Nhơn shell with its own members, stories and news", async () => {
   const response = await render("/quy-nhon");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /class="app-shell tab-introduce campus-quy-nhon"/);
   assert.match(html, /id="site-main-nav"/);
   for (const label of ["Home", "About", "Members", "Stories", "News"]) {
-    assert.match(html, new RegExp(`>${label}<\\/button>`));
+    assert.match(html, new RegExp(`>${label}<\/button>`));
   }
   assert.match(html, /href="\.\.\/\?campus=hcm"[^>]*>Campus HCM<\/a>/);
   assert.match(html, /href="\.\/" aria-current="page"[^>]*>Campus Quy Nhơn<\/a>/);
-  assert.match(html, /CHƯA CÓ CÂU CHUYỆN/);
-  assert.match(html, /THÀNH VIÊN<\/small><strong>0<\/strong>/);
-  assert.match(html, /\.\.\/images\/faerie-icon\.png/);
-  assert.doesNotMatch(html, /TeamBuilding_1|HopOffline_3|faeriesolace@gmail.com|TP\.HCM Campus/);
-  assert.doesNotMatch(html, /class="event-promo-dialog"|class="member-card"|class="news-card"/);
+  assert.match(html, /THÀNH VIÊN<\/small><strong>15<\/strong>/);
+  assert.match(html, /HeroQuyNhon\.webp/);
+  assert.match(html, /Khởi động Faerie Quy Nhơn 2026/);
+  assert.doesNotMatch(html, /TP\.HCM Campus/);
 });
 
 test("keeps the TP.HCM member banner off the Quy Nhơn member hero", async () => {

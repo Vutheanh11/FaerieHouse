@@ -1109,6 +1109,16 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
 .campus-quy-nhon .valorant-members .members-hero {
   background: radial-gradient(circle at 78% 38%, #315a3d 0%, #1b3828 36%, #102017 74%);
 }
+.campus-quy-nhon .valorant-members .members-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/events/2026/quynhon/hero/HeroQuyNhon.webp") center/cover no-repeat;
+  opacity: .32;
+  filter: saturate(1.1) brightness(.9);
+  transform: scale(1.03);
+  animation: tactical-photo-breathe 14s ease-in-out infinite alternate;
+}
 .valorant-members .members-hero::after {
   content: "";
   position: absolute;
