@@ -50,6 +50,10 @@ const eventStories: Record<string, string> = {
   "02.09-Chào mừng Quốc khánh": "Trong không khí Quốc khánh, Faerie cùng lưu giữ những khoảnh khắc mang sắc màu Việt Nam. Đây là dịp để cả nhà hòa chung niềm vui và thể hiện niềm tự hào theo cách của mình.\n\nCùng xem lại những hình ảnh của hoạt động Chào mừng Quốc khánh, nơi tinh thần tập thể Faerie gặp gỡ không khí của ngày lễ.",
   "03.09-Welcome Day 1": "Welcome Day đầu tiên mở ra những cuộc gặp gỡ giữa Faerie và các gương mặt mới tại Đại học FPT TP.HCM. Từ lời chào, nụ cười đến những tương tác ban đầu, mỗi khoảnh khắc đều góp phần tạo nên không khí ngày hội.\n\nVới Faerie, đây là điểm bắt đầu của những kết nối mới. Bộ ảnh bên dưới ghi lại năng lượng và những dấu ấn đầu tiên của Welcome Day.",
   "04.09-Welcome Day 2": "Ngày thứ hai của Welcome Day tiếp nối lời chào mà Faerie dành cho các tân sinh viên. Thêm những cuộc gặp gỡ, thêm hoạt động và thêm những gương mặt góp mặt trong câu chuyện của nhà.\n\nTừ ngày đầu tiên đến ngày thứ hai, điều đáng nhớ vẫn là những kết nối được tạo ra. Cùng nhìn lại những hình ảnh và kỷ niệm của Welcome Day 2.",
+  "15.08-Khởi động Faerie Quy Nhơn 2026": "Faerie Quy Nhơn 2026 chính thức khởi động hành trình với sự góp mặt của các thành viên đầy nhiệt huyết. Đây là cột mốc mở đầu để cả nhà cùng nhìn về một hướng và chuẩn bị cho các hoạt động tiếp theo.\n\nCùng nhìn lại những khoảnh khắc đầu tiên đánh dấu sự xuất hiện của nhà Faerie tại Đại học FPT Quy Nhơn.",
+  "28.08-Buổi họp mặt trực tiếp đầu tiên": "Buổi gặp mặt trực tiếp đầu tiên của nhà Faerie Quy Nhơn mang lại nhiều cảm xúc và sự gắn kết. Các thành viên cùng trao đổi về kế hoạch đồng hành cùng tân sinh viên và xây dựng ngôi nhà chung.\n\nNhững nụ cười và tinh thần nhiệt huyết đã biến buổi họp thành một kỷ niệm khó quên.",
+  "12.09-Team Building Kết Nối": "Một ngày Team Building trọn vẹn của Faerie Quy Nhơn với nhiều hoạt động thử thách tinh thần đồng đội. Mỗi trò chơi là một cơ hội để các thành viên hiểu nhau hơn và gắn kết bền chặt hơn.\n\nNăng lượng và tinh thần đoàn kết chính là điều tuyệt vời nhất mà cả nhà cùng tạo nên.",
+  "25.09-Chào đón Tân Sinh Viên Khóa Mới": "Faerie Quy Nhơn nồng nhiệt chào đón các bạn tân sinh viên khóa mới đến với Đại học FPT Quy Nhơn. Sự kiện tràn ngập nụ cười, lời chào và những chia sẻ bổ ích cho chặng đường đại học sắp tới.\n\nChúc các bạn tân sinh viên có một khởi đầu thật rực rỡ cùng nhà Faerie!",
 };
 
 function NewsStoryPage({ story, loading, error, onBack, backLabel }: { story?: FaerieEvent; loading: boolean; error: boolean; onBack: () => void; backLabel: string }) {
@@ -374,6 +378,72 @@ const events2026: FaerieEvent[] = [
     },
 ];
 
+const events2026QuyNhon: FaerieEvent[] = [
+  {
+    id: "2026-15-08-qn-kick-off",
+    date: "15.08",
+    year: "2026",
+    title: "Khởi động Faerie Quy Nhơn 2026",
+    description: "Cột mốc ra mắt và khởi động hành trình Faerie tại Đại học FPT Quy Nhơn, cùng nhau viết nên những câu chuyện đầu tiên.",
+    tag: "Kick Off",
+    location: "FPTU Quy Nhơn",
+    tone: "mint",
+    images: [
+      "images/events/2026/quynhon/kickoff/KickOff_1.webp",
+      "images/events/2026/quynhon/kickoff/KickOff_2.webp",
+      "images/events/2026/quynhon/kickoff/KickOff_3.webp",
+      "images/events/2026/quynhon/kickoff/KickOff_4.webp",
+    ],
+  },
+  {
+    id: "2026-28-08-qn-hop-mat",
+    date: "28.08",
+    year: "2026",
+    title: "Buổi họp mặt trực tiếp đầu tiên",
+    description: "Cả nhà Faerie Quy Nhơn gặp mặt trực tiếp, chia sẻ kế hoạch và chuẩn bị các hoạt động kết nối.",
+    tag: "Gặp gỡ",
+    location: "FPTU Quy Nhơn",
+    tone: "fern",
+    images: [
+      "images/events/2026/quynhon/hop-mat/HopMat_1.webp",
+      "images/events/2026/quynhon/hop-mat/HopMat_2.webp",
+      "images/events/2026/quynhon/hop-mat/HopMat_3.webp",
+      "images/events/2026/quynhon/hop-mat/HopMat_4.webp",
+    ],
+  },
+  {
+    id: "2026-12-09-qn-team-building",
+    date: "12.09",
+    year: "2026",
+    title: "Team Building Kết Nối",
+    description: "Một ngày cùng thử thách, phối hợp và thắt chặt tinh thần đồng đội của các thành viên Faerie Quy Nhơn.",
+    tag: "Kết nối",
+    location: "Quy Nhơn",
+    tone: "mint",
+    images: [
+      "images/events/2026/quynhon/team-building/TeamBuilding_1.webp",
+      "images/events/2026/quynhon/team-building/TeamBuilding_2.webp",
+      "images/events/2026/quynhon/team-building/TeamBuilding_3.webp",
+      "images/events/2026/quynhon/team-building/TeamBuilding_4.webp",
+    ],
+  },
+  {
+    id: "2026-25-09-qn-welcome-day",
+    date: "25.09",
+    year: "2026",
+    title: "Chào đón Tân Sinh Viên Khóa Mới",
+    description: "Faerie Quy Nhơn đồng hành và chào đón các tân sinh viên FPTU Quy Nhơn với nụ cười và năng lượng tích cực.",
+    tag: "Welcome Day",
+    location: "FPTU Quy Nhơn",
+    tone: "fern",
+    images: [
+      "images/events/2026/quynhon/welcome-day/WelcomeDay_1.webp",
+      "images/events/2026/quynhon/welcome-day/WelcomeDay_2.webp",
+      "images/events/2026/quynhon/welcome-day/WelcomeDay_3.webp",
+    ],
+  },
+];
+
 function memberRoleRank(title: string) {
   if (title === "Mentor") return 0;
   if (title === "Supporter") return 1;
@@ -419,6 +489,24 @@ const roster2026: MemberProfile[] = ([
   { name: "Trần Đức Minh", title: "Member", group: "Member" },
   { name: "Phạm Gia Khiêm", title: "Member", group: "Member" },
   { name: "Trương Thảo Vi", title: "Member", group: "Member" },
+] satisfies MemberProfile[]).sort((first, second) => memberRoleRank(first.title) - memberRoleRank(second.title));
+
+const roster2026QuyNhon: MemberProfile[] = ([
+  { name: "Lê Việt Phương", fullName: "Lê Việt Phương", title: "Mentor", group: "Mentor", photo: "images/members/2026/cards/quynhon/Mentor_PhuongLV.webp", introduction: "Mentor nhà Faerie Quy Nhơn 2026" },
+  { name: "Nguyễn Thị Yến Nhi", fullName: "Nguyễn Thị Yến Nhi", title: "Supporter", group: "Supporter", photo: "images/members/2026/cards/quynhon/Supportive Mentor_NhiLTY.webp", introduction: "Supportive Mentor nhà Faerie Quy Nhơn 2026" },
+  { name: "Đoàn Đệ", fullName: "Đoàn Đệ", title: "Supporter", group: "Supporter", photo: "images/members/2026/cards/quynhon/DoanDe.webp", introduction: "Supporter nhiệt huyết nhà Faerie Quy Nhơn" },
+  { name: "Hồ Lê Hoàng Nhật", fullName: "Hồ Lê Hoàng Nhật", title: "Leader Nhà", group: "Leadership", photo: "images/members/2026/cards/quynhon/HoangNhat.webp", message: "Đoàn kết là sức mạnh!", introduction: "Leader nhà Faerie Quy Nhơn 2026" },
+  { name: "Nguyễn Ánh Tín", fullName: "Nguyễn Ánh Tín", title: "Sub Leader Nhà", group: "Leadership", photo: "images/members/2026/cards/quynhon/AnhTin.webp", message: "Cùng nhau tạo nên những điều kỳ diệu", introduction: "Sub Leader nhà Faerie Quy Nhơn 2026" },
+  { name: "Tô Lương Đình Hậu", fullName: "Tô Lương Đình Hậu", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/DinhHau.webp" },
+  { name: "Đỗ Thị Thanh Tâm", fullName: "Đỗ Thị Thanh Tâm", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/Thanh_Tam.webp" },
+  { name: "Trần Thanh Tâm", fullName: "Trần Thanh Tâm", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/TranTam.webp" },
+  { name: "Nguyễn Thảo Gia Hân", fullName: "Nguyễn Thảo Gia Hân", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/GiaHan.webp" },
+  { name: "Nguyễn Gia Phúc", fullName: "Nguyễn Gia Phúc", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/GiaPhuc.webp" },
+  { name: "Nguyễn Lê Nhật", fullName: "Nguyễn Lê Nhật", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/LeNhat.webp" },
+  { name: "Trần Thanh Thanh", fullName: "Trần Thanh Thanh", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/ThanhThanh.webp" },
+  { name: "Tiến Lợi", fullName: "Nguyễn Tiến Lợi", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/TienLoi.webp" },
+  { name: "Trần Bảo Trúc Giang", fullName: "Trần Bảo Trúc Giang", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/TrucGiang.webp" },
+  { name: "Nguyễn Trung Hiếu", fullName: "Nguyễn Trung Hiếu", title: "Member", group: "Member", photo: "images/members/2026/cards/quynhon/TrungHieu.webp" },
 ] satisfies MemberProfile[]).sort((first, second) => memberRoleRank(first.title) - memberRoleRank(second.title));
 
 const groupOrder: MemberGroup[] = ["Mentor", "Supporter", "Leadership", "Member"];
@@ -488,8 +576,8 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
   const [navSection, setNavSection] = useState<NavSection>("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const year: RosterYear = 2026;
-  const [currentMembers, setCurrentMembers] = useState<MemberProfile[]>(isQuyNhon ? [] : roster2026);
-  const [newsItems, setNewsItems] = useState<FaerieEvent[]>(isQuyNhon ? [] : [...events2026].reverse());
+  const [currentMembers, setCurrentMembers] = useState<MemberProfile[]>(isQuyNhon ? roster2026QuyNhon : roster2026);
+  const [newsItems, setNewsItems] = useState<FaerieEvent[]>(isQuyNhon ? [...events2026QuyNhon].reverse() : [...events2026].reverse());
   const [archiveYear, setArchiveYear] = useState("2026");
   const [selectedStoryKey, setSelectedStoryKey] = useState<string | null>(null);
   const storyScrollPosition = useRef<number | null>(null);
@@ -794,19 +882,19 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       ) : tab === "Introduce" ? (
         <div className="valorant-intro page-enter">
           <section className="v-hero" aria-labelledby="faerie-hero-title">
-            {!isQuyNhon && <img
+            <img
               className="v-hero-background"
-              src="images/events/2026/team-building/TeamBuilding_1.webp"
-              alt="Các thành viên Faerie cùng nhau trong buổi Team Building ngoài trời"
+              src={isQuyNhon ? `${isQuyNhon ? "../" : ""}images/events/2026/quynhon/hero/HeroQuyNhon.webp` : "images/events/2026/team-building/TeamBuilding_1.webp"}
+              alt={isQuyNhon ? "Các thành viên Faerie Quy Nhơn" : "Các thành viên Faerie cùng nhau trong buổi Team Building ngoài trời"}
               fetchPriority="high"
-            />}
+            />
             <div className="v-hero-wash" aria-hidden="true" />
             <div className="v-grid" aria-hidden="true" />
-            <span className="v-coordinate v-coordinate-top" aria-hidden="true">{isQuyNhon ? "QUY NHƠN / 2026" : <>10°50&apos;N / 106°40&apos;E</>}</span>
+            <span className="v-coordinate v-coordinate-top" aria-hidden="true">{isQuyNhon ? <>13°46&apos;N / 109°14&apos;E</> : <>10°50&apos;N / 106°40&apos;E</>}</span>
             <span className="v-coordinate v-coordinate-side" aria-hidden="true">{`FAERIE // ${isQuyNhon ? "QUY NHON" : "FPTU HCMC"} // 2026`}</span>
 
             <div className="v-hero-content section-shell">
-              <p className="v-kicker"><span>01</span> {isQuyNhon ? "Faerie Quy Nhơn · 2026" : "Website chính thức của nhà Faerie · Brosis FPTU TP.HCM"}</p>
+              <p className="v-kicker"><span>01</span> {isQuyNhon ? "Website chính thức của nhà Faerie · Brosis FPTU Quy Nhơn" : "Website chính thức của nhà Faerie · Brosis FPTU TP.HCM"}</p>
               <h1 id="faerie-hero-title">
                 <span>WELCOME</span>
                 <span>TO</span>
@@ -816,7 +904,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
               <div className="v-hero-bottom">
                 <p>
                   {isQuyNhon
-                    ? hasQuyNhonContent ? "Chào mừng đến với Faerie Quy Nhơn 2026. Khám phá thành viên, hoạt động và những câu chuyện mới của nhà." : "Chào mừng đến với Faerie Quy Nhơn 2026. Không gian dành cho thành viên, hoạt động và những câu chuyện của nhà đã sẵn sàng; nội dung sẽ được cập nhật khi có thông tin chính thức."
+                    ? "Faerie là một mảnh ghép của dự án Brothers & Sisters tại Đại học FPT Quy Nhơn, nơi các anh chị đồng hành, kết nối và hỗ trợ tân sinh viên. Tại đây, bạn có thể tìm hiểu thành viên của nhà, xem các hoạt động nổi bật và đọc những câu chuyện của Faerie Quy Nhơn."
                     : "Faerie là một mảnh ghép của dự án Brothers & Sisters tại Đại học FPT TP.HCM, nơi các anh chị đồng hành, kết nối và hỗ trợ tân sinh viên. Tại đây, bạn có thể tìm hiểu thành viên của nhà, xem các hoạt động nổi bật và đọc những câu chuyện của Faerie."}
                 </p>
                 <div className="v-actions">
@@ -874,7 +962,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                   >
                     <div className={`v-event-media ${event.tone} ${event.images?.length ? "has-photos" : ""}`}>
                       {event.images?.length ? (
-                        <EventPhotoGallery images={event.images} title={event.title} />
+                        <EventPhotoGallery images={event.images.map((src) => isQuyNhon && !src.startsWith("..") ? `../${src}` : src)} title={event.title} />
                       ) : (
                         <div className="v-event-symbol" aria-hidden="true">{index === 0 ? "✦" : "∞"}</div>
                       )}
@@ -912,15 +1000,16 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
               </p>
             </div>
 
-            <div className="v-about-visual" aria-label={isQuyNhon ? "Chỗ dành cho hình ảnh Faerie Quy Nhơn" : "Khoảnh khắc của các thành viên Faerie"} data-reveal>
-              {isQuyNhon ? (
-                quyNhonFeatureImage ? <figure className="v-photo-main"><img src={quyNhonFeatureImage} alt="Khoảnh khắc Faerie Quy Nhơn" loading="lazy" decoding="async" /><figcaption>FAERIE QUY NHƠN // 2026</figcaption></figure> : <div className="v-photo-main campus-photo-placeholder"><span>FAERIE<br />QUY NHƠN</span><small>HÌNH ẢNH SẼ ĐƯỢC CẬP NHẬT</small></div>
-              ) : (
-                <figure className="v-photo-main">
-                  <img src="images/events/2026/offline/HopOffline_3.webp" alt="Thành viên Faerie cùng trò chuyện và vỗ tay trong buổi họp offline" loading="lazy" decoding="async" />
-                  <figcaption>FAERIE OFFLINE // 2026</figcaption>
-                </figure>
-              )}
+            <div className="v-about-visual" aria-label={isQuyNhon ? "Khoảnh khắc của các thành viên Faerie Quy Nhơn" : "Khoảnh khắc của các thành viên Faerie"} data-reveal>
+              <figure className="v-photo-main">
+                <img
+                  src={isQuyNhon ? `${isQuyNhon ? "../" : ""}images/events/2026/quynhon/about/AboutQuyNhon.webp` : "images/events/2026/offline/HopOffline_3.webp"}
+                  alt={isQuyNhon ? "Thành viên Faerie Quy Nhơn cùng trò chuyện trong buổi họp mặt" : "Thành viên Faerie cùng trò chuyện và vỗ tay trong buổi họp offline"}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>{isQuyNhon ? "FAERIE QUY NHƠN // 2026" : "FAERIE OFFLINE // 2026"}</figcaption>
+              </figure>
               <span className="v-photo-code" aria-hidden="true">FÆ / 03 — 26</span>
             </div>
 
@@ -954,7 +1043,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
           </section>
 
           <section className="v-manifesto">
-            {!isQuyNhon && <img src="images/events/2026/team-building/TeamBuilding_7.webp" alt="Các thành viên Faerie chụp ảnh cùng nhau tại Team Building 2026" loading="lazy" decoding="async" />}
+            <img src={isQuyNhon ? `${isQuyNhon ? "../" : ""}images/events/2026/quynhon/manifesto/ManifestoQuyNhon.webp` : "images/events/2026/team-building/TeamBuilding_7.webp"} alt={isQuyNhon ? "Tập thể Faerie Quy Nhơn" : "Các thành viên Faerie chụp ảnh cùng nhau tại Team Building 2026"} loading="lazy" decoding="async" />
             <div className="v-manifesto-wash" aria-hidden="true" />
             <div className="v-manifesto-copy section-shell" data-reveal>
               <p className="v-kicker"><span>05</span> Ready for the next chapter?</p>
@@ -1059,7 +1148,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                           style={memberGlitchStyle(person.photo || (isQuyNhon ? "" : memberPhoto(year, person.name)))}
                         >
                           {person.photo || (!isQuyNhon && memberPhoto(year, person.name)) ? (
-                            <img src={person.photo || memberPhoto(year, person.name)} alt={`Ảnh của ${person.name}`} loading="lazy" />
+                            <img src={person.photo ? (isQuyNhon && !person.photo.startsWith("..") ? "../" + person.photo : person.photo) : memberPhoto(year, person.name)} alt={`Ảnh của ${person.name}`} loading="lazy" />
                           ) : (
                             <span>{initials(person.name)}</span>
                           )}
@@ -1104,7 +1193,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                   aria-label={`Đọc bài viết ${event.title}`}>
                   <div className="news-card-image">
                     {event.images?.[0] ? (
-                      <img src={event.images[0]} alt={`Faerie — ${event.title}, ${displayDate(event.date, event.year)}`} loading="lazy" decoding="async" />
+                      <img src={isQuyNhon && !event.images[0].startsWith("..") ? `../${event.images[0]}` : event.images[0]} alt={`Faerie — ${event.title}, ${displayDate(event.date, event.year)}`} loading="lazy" decoding="async" />
                     ) : (
                       <span className="news-card-image-placeholder">FAERIE NEWS</span>
                     )}
@@ -1174,7 +1263,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       {selectedMember && (
         <MemberProfileDialog
           member={selectedMember}
-          photo={selectedMember.photo || (isQuyNhon ? "" : memberPhoto(year, selectedMember.name))}
+          photo={selectedMember.photo ? (isQuyNhon && !selectedMember.photo.startsWith("..") ? `../${selectedMember.photo}` : selectedMember.photo) : (isQuyNhon ? "" : memberPhoto(year, selectedMember.name))}
           year={year}
           onDismiss={closeMemberProfile}
         />
@@ -1196,15 +1285,23 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
 
       <footer className="tactical-footer">
         <div className="footer-brand"><span><img src={logoSrc} alt="" /></span><strong>FAERIE</strong></div>
-        <p>{isQuyNhon ? <>Faerie House · 2026<br />Quy Nhơn</> : <>Brothers &amp; Sisters · FPT University<br />TP.HCM Campus</>}</p>
+        <p>{isQuyNhon ? <>Brothers &amp; Sisters · FPT University<br />Quy Nhơn Campus</> : <>Brothers &amp; Sisters · FPT University<br />TP.HCM Campus</>}</p>
         <p className="footer-note">MADE WITH KINDNESS<br />FOR EVERY NEW CHAPTER.</p>
         <div className="footer-contact">
-          <span>CONTACT // FAERIE {isQuyNhon ? "QUY NHƠN" : ""}</span>
-          {isQuyNhon ? <p>Thông tin liên hệ sẽ được cập nhật.</p> : <>
-            <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>
-            <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noreferrer">Facebook Faerie ↗</a>
-            <address>Lô E2a-7, Đường D1 Khu Công nghệ cao, P. Long Thạnh Mỹ, TP. Thủ Đức, Ho Chi Minh City, Vietnam</address>
-          </>}
+          <span>CONTACT // FAERIE {isQuyNhon ? "QUY NHƠN" : "TP.HCM"}</span>
+          {isQuyNhon ? (
+            <>
+              <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>
+              <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noreferrer">Facebook Faerie ↗</a>
+              <address>Khu đô thị An Phú Thịnh, P. Nhơn Bình, TP. Quy Nhơn, Bình Định</address>
+            </>
+          ) : (
+            <>
+              <a href="mailto:faeriesolace@gmail.com">faeriesolace@gmail.com</a>
+              <a href="https://www.facebook.com/profile.php?id=61577779404694" target="_blank" rel="noreferrer">Facebook Faerie ↗</a>
+              <address>Lô E2a-7, Đường D1 Khu Công nghệ cao, P. Long Thạnh Mỹ, TP. Thủ Đức, Ho Chi Minh City, Vietnam</address>
+            </>
+          )}
           <a className="footer-credit" href="https://www.facebook.com/vu.bootloop" target="_blank" rel="noopener noreferrer">Made by Vu The Anh ↗</a>
         </div>
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Lên đầu trang ↑</button>
