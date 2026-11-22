@@ -1200,7 +1200,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
                     openStory(event);
                   }}
                   aria-label={`Đọc bài viết ${event.title}`}>
-                 <div className="news-card-image">
+               <div className="news-card-image">
   {event.images?.[0] ? (
     <img src={normalizeAssetUrl(event.images[0], isQuyNhon)} alt={`Faerie — ${event.title}, ${displayDate(event.date, event.year)}`} loading="lazy" decoding="async" />
   ) : (
