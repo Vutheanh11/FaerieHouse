@@ -1115,7 +1115,7 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
   position: absolute;
   inset: 0;
   z-index: -3;
-  background: url("/images/quynhon-banner.jpg") center 40% / cover no-repeat;
+  background: url("/images/quynhon-members-banner.jpg") center 40% / cover no-repeat;
   opacity: .36;
   filter: saturate(1.1) brightness(.9);
   transform: scale(1.03);
@@ -2030,18 +2030,6 @@ footer button { justify-self: end; padding: 11px 0; border: 0; border-bottom: 1p
   opacity: .16;
   background: linear-gradient(rgba(185,213,173,.4) 1px, transparent 1px), linear-gradient(90deg, rgba(185,213,173,.4) 1px, transparent 1px);
   background-size: 72px 72px;
-  pointer-events: none;
-}
-.campus-quy-nhon .news-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: url("/images/quynhon-banner.jpg") center 40% / cover no-repeat;
-  opacity: .22;
-  filter: saturate(1.1) brightness(.85);
-  transform: scale(1.02);
-  animation: tactical-photo-breathe 16s ease-in-out infinite alternate;
   pointer-events: none;
 }
 .campus-quy-nhon .v-events {
