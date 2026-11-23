@@ -57,7 +57,7 @@ const eventStories: Record<string, string> = {
   "08.09-BUỔI RA MẮT VÀ GẶP GỠ TÂN SINH VIÊN NHÀ FAERIE: NƠI NHỮNG TRÁI TIM LẦN ĐẦU CHẠM NHỊP THANH XUÂN ✨🧚": "Trong bầu không khí rộn ràng chào đón thế hệ tân sinh viên mới chính thức bước chân vào giảng đường đại học, vừa qua, Nhà Faerie (thuộc chương trình Brothers & Sisters – FPTU Quy Nhơn) đã tổ chức thành công buổi lễ ra mắt và gặp gỡ đầu tiên dành cho các bạn tân sinh viên (TSV). Không đơn thuần là một buổi họp mặt làm quen, đây thực sự là dấu mốc khởi đầu đầy ấm áp, mở ra hành trình gắn kết giữa những người anh, người chị đi trước và những \"mảnh ghép\" mới đầy nhiệt huyết của đại gia đình Faerie.\n\nDưới sự dẫn dắt tận tâm, gần gũi của bộ đôi Mentor Việt Phương và Yến Nhi, cùng sự hỗ trợ kết nối, điều phối nhịp nhàng của Phương Anh và các thành viên nòng cốt, buổi gặp gỡ đã diễn ra trọn vẹn với nhiều cung bậc cảm xúc đáng nhớ:\n\nXóa nhòa khoảng cách từ những lời chào đầu tiên: Những phút giây bỡ ngỡ, rụt rè ban đầu khi bước vào một tập thể mới đã nhanh chóng tan biến nhờ sự đón tiếp nồng nhiệt của đại gia đình Nhà Faerie. Từng thành viên mới đều có cơ hội bước lên giới thiệu bản thân, chia sẻ sở thích, cá tính riêng, qua đó giúp cả nhà nhận ra những nét tính cách thú vị và đa sắc màu của thế hệ TSV năm nay.\n\nBùng nổ tiếng cười qua chuỗi hoạt động tương tác: Các trò chơi làm quen (Ice-breaking) được thiết kế khéo léo đã biến không gian buổi gặp mặt trở nên sôi động hơn bao giờ hết. Những tràng cười giòn tan, những màn phối hợp ngẫu hứng nhưng ăn ý đến bất ngờ đã giúp các bạn tân sinh viên nhanh chóng \"bắt sóng\" với nhau, biến những người bạn mới quen trở thành những người đồng đội thân thiết chỉ sau ít phút.\n\nLắng nghe, sẻ chia và tiếp lửa hành trình mới: Dành trọn tâm huyết cho đàn em, hai Mentor Việt Phương, Yến Nhi cùng các anh chị khóa trên đã cởi mở chia sẻ những kinh nghiệm quý báu về môi trường học tập, kỹ năng hòa nhập đời sống sinh viên tại FPTU Quy Nhơn, cũng như giải đáp tận tình mọi thắc mắc của các bạn TSV. Đồng thời, những định hướng và kế hoạch hoạt động sắp tới của Nhà Faerie trong khuôn khổ Brothers & Sisters cũng được bật mí, khơi dậy tinh thần hào hứng và quyết tâm chinh phục thử thách của toàn thể thành viên.\n\nBuổi ra mắt khép lại bằng những bức ảnh lưu niệm rạng rỡ nụ cười – minh chứng rõ nét nhất cho tinh thần đoàn kết, yêu thương và sẵn sàng đồng hành cùng nhau của Nhà Faerie.\n\nMột lần nữa, xin nhiệt liệt chào mừng các bạn tân sinh viên đã chính thức trở thành một phần không thể thiếu của Nhà Faerie! Chúc cho những năm tháng thanh xuân của các bạn tại FPTU Quy Nhơn sẽ luôn rực rỡ, tràn đầy năng lượng và viết nên thật nhiều kỷ niệm đẹp dưới mái nhà chung Brothers & Sisters! 💙🔥",
 };
 
-function NewsStoryPage({ story, loading, error, onBack, backLabel }: { story?: FaerieEvent; loading: boolean; error: boolean; onBack: () => void; backLabel: string }) {
+function NewsStoryPage({ story, loading, error, onBack, backLabel, isQuyNhon = false }: { story?: FaerieEvent; loading: boolean; error: boolean; onBack: () => void; backLabel: string; isQuyNhon?: boolean }) {
   if (!story) {
     return (
       <div className="news-story-page news-story-empty page-enter">
@@ -91,7 +91,7 @@ function NewsStoryPage({ story, loading, error, onBack, backLabel }: { story?: F
       </header>
       {images[0] ? (
         <figure className="news-story-cover">
-          <img src={images[0]} alt={`${story.title} — ảnh 1`} fetchPriority="high" />
+          <img src={normalizeAssetUrl(images[0], isQuyNhon)} alt={`${story.title} — ảnh 1`} fetchPriority="high" />
           <figcaption>FAERIE HOUSE / {story.year}</figcaption>
         </figure>
       ) : (
@@ -116,7 +116,7 @@ function NewsStoryPage({ story, loading, error, onBack, backLabel }: { story?: F
         <section className="news-story-gallery section-shell" aria-label={`Hình ảnh ${story.title}`}>
           <div className="news-story-gallery-heading"><span>02 / HÌNH ẢNH</span><h2>NHỮNG KHOẢNH KHẮC<br /><em>ĐÁNG NHỚ.</em></h2></div>
           <div className="news-story-gallery-grid">{images.slice(1).map((src, index) => (
-            <figure key={`${src}-${index}`}><img src={src} alt={`${story.title} — ảnh ${index + 2}`} loading="lazy" decoding="async" /><figcaption>{String(index + 2).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</figcaption></figure>
+            <figure key={`${src}-${index}`}><img src={normalizeAssetUrl(src, isQuyNhon)} alt={`${story.title} — ảnh ${index + 2}`} loading="lazy" decoding="async" /><figcaption>{String(index + 2).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</figcaption></figure>
           ))}</div>
         </section>
       )}
@@ -390,38 +390,6 @@ const events2026: FaerieEvent[] = [
 
 const events2026QuyNhon: FaerieEvent[] = [
   {
-    id: "2026-15-08-qn-kick-off",
-    date: "15.08",
-    year: "2026",
-    title: "Khởi động Faerie Quy Nhơn 2026",
-    description: "Cột mốc ra mắt và khởi động hành trình Faerie tại Đại học FPT Quy Nhơn, cùng nhau viết nên những câu chuyện đầu tiên.",
-    tag: "Kick Off",
-    location: "FPTU Quy Nhơn",
-    tone: "mint",
-    images: [
-      "images/events/2026/quynhon/kickoff/KickOff_1.webp",
-      "images/events/2026/quynhon/kickoff/KickOff_2.webp",
-      "images/events/2026/quynhon/kickoff/KickOff_3.webp",
-      "images/events/2026/quynhon/kickoff/KickOff_4.webp",
-    ],
-  },
-  {
-    id: "2026-28-08-qn-hop-mat",
-    date: "28.08",
-    year: "2026",
-    title: "Buổi họp mặt trực tiếp đầu tiên",
-    description: "Cả nhà Faerie Quy Nhơn gặp mặt trực tiếp, chia sẻ kế hoạch và chuẩn bị các hoạt động kết nối.",
-    tag: "Gặp gỡ",
-    location: "FPTU Quy Nhơn",
-    tone: "fern",
-    images: [
-      "images/events/2026/quynhon/hop-mat/HopMat_1.webp",
-      "images/events/2026/quynhon/hop-mat/HopMat_2.webp",
-      "images/events/2026/quynhon/hop-mat/HopMat_3.webp",
-      "images/events/2026/quynhon/hop-mat/HopMat_4.webp",
-    ],
-  },
-  {
     id: "2026-08-09-qn-ra-mat-tsv",
     date: "08.09",
     year: "2026",
@@ -432,41 +400,10 @@ const events2026QuyNhon: FaerieEvent[] = [
     location: "FPTU Quy Nhơn",
     tone: "mint",
     images: [
-      "images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_1.webp",
-      "images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_2.webp",
-      "images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_3.webp",
-      "images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_4.webp",
-    ],
-  },
-  {
-    id: "2026-12-09-qn-team-building",
-    date: "12.09",
-    year: "2026",
-    title: "Team Building Kết Nối",
-    description: "Một ngày cùng thử thách, phối hợp và thắt chặt tinh thần đồng đội của các thành viên Faerie Quy Nhơn.",
-    tag: "Kết nối",
-    location: "Quy Nhơn",
-    tone: "mint",
-    images: [
-      "images/events/2026/quynhon/team-building/TeamBuilding_1.webp",
-      "images/events/2026/quynhon/team-building/TeamBuilding_2.webp",
-      "images/events/2026/quynhon/team-building/TeamBuilding_3.webp",
-      "images/events/2026/quynhon/team-building/TeamBuilding_4.webp",
-    ],
-  },
-  {
-    id: "2026-25-09-qn-welcome-day",
-    date: "25.09",
-    year: "2026",
-    title: "Chào đón Tân Sinh Viên Khóa Mới",
-    description: "Faerie Quy Nhơn đồng hành và chào đón các tân sinh viên FPTU Quy Nhơn với nụ cười và năng lượng tích cực.",
-    tag: "Welcome Day",
-    location: "FPTU Quy Nhơn",
-    tone: "fern",
-    images: [
-      "images/events/2026/quynhon/welcome-day/WelcomeDay_1.webp",
-      "images/events/2026/quynhon/welcome-day/WelcomeDay_2.webp",
-      "images/events/2026/quynhon/welcome-day/WelcomeDay_3.webp",
+      "/images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_1.webp",
+      "/images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_2.webp",
+      "/images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_3.webp",
+      "/images/events/2026/quynhon/ra-mat-tsv/RaMatTSV_4.webp",
     ],
   },
 ];
@@ -720,7 +657,14 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
         if (Array.isArray(data.news) && data.news.every((item) =>
           typeof item.date === "string" && typeof item.title === "string" &&
           typeof item.description === "string" && Array.isArray(item.images))) {
-          setNewsItems(data.news);
+          const localEvents = isQuyNhon ? events2026QuyNhon : events2026;
+          const apiTitles = new Set(data.news.map((item) => item.title.trim().toLowerCase()));
+          const extraLocal = localEvents.filter((item) => !apiTitles.has(item.title.trim().toLowerCase()));
+          const combined = [...data.news, ...extraLocal].sort((a, b) => {
+            const dateNum = (story: FaerieEvent) => Number(`${story.year || "2026"}${story.date.slice(3, 5)}${story.date.slice(0, 2)}`);
+            return dateNum(b) - dateNum(a);
+          });
+          setNewsItems(combined);
           setNewsError(false);
         } else setNewsError(true);
       } catch {
@@ -905,7 +849,7 @@ export default function Home({ campus = "hcm" }: { campus?: "hcm" | "quy-nhon" }
       </header>
 
       {selectedStoryKey ? (
-        <NewsStoryPage story={selectedStory} loading={newsLoading} error={newsError} onBack={closeStory} backLabel={tab === "Introduce" ? "Stories" : "News"} />
+        <NewsStoryPage story={selectedStory} loading={newsLoading} error={newsError} onBack={closeStory} backLabel={tab === "Introduce" ? "Stories" : "News"} isQuyNhon={isQuyNhon} />
       ) : tab === "Introduce" ? (
         <div className="valorant-intro page-enter">
           <section className="v-hero" aria-labelledby="faerie-hero-title">
